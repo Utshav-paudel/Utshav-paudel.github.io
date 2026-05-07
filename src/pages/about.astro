@@ -1,32 +1,49 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Cell from "../components/Cell.astro";
+import Icon from "../components/Icon.astro";
 import { site } from "../data/site.ts";
 import { experience } from "../data/experience.ts";
 import { skills, education } from "../data/skills.ts";
 ---
 
 <Layout filename="about.ipynb" title={`About — ${site.name}`}>
+  <div class="px-4 sm:px-10 py-8 sm:py-10 border-b border-ink-200 dark:border-ink-800">
+    <div class="flex items-start justify-between gap-4 flex-wrap">
+      <div class="min-w-0">
+        <h1 class="text-3xl font-medium tracking-tight text-ink-900 dark:text-ink-100">About</h1>
+        <p class="mt-1 text-ink-500 dark:text-ink-400 text-sm font-mono">about.ipynb</p>
+      </div>
+      <a
+        href="/cv.pdf"
+        download="utshav-paudel-cv.pdf"
+        class="inline-flex items-center gap-2 px-3.5 py-2 rounded-md border border-ink-300 dark:border-ink-700 text-sm font-medium hover:border-ink-500 dark:hover:border-ink-400 transition-colors"
+      >
+        <Icon name="download" size={15} />
+        Download CV
+      </a>
+    </div>
+    <p class="mt-5 text-ink-700 dark:text-ink-300 leading-relaxed text-[15px] max-w-2xl">
+      {site.bio}
+    </p>
+    <p class="mt-3 flex items-center gap-1.5 text-sm text-ink-500 dark:text-ink-400">
+      <Icon name="map-pin" size={14} />
+      {site.location}
+    </p>
+  </div>
+
   <Cell kind="markdown" count={null}>
-    <h1 class="text-2xl font-medium tracking-tight text-ink-900 dark:text-ink-100">About</h1>
-    <p class="text-ink-600 dark:text-ink-400 text-sm mt-1 font-mono">notebook · about.ipynb</p>
+    <div class="flex items-center gap-2 text-ink-700 dark:text-ink-300">
+      <Icon name="briefcase" size={16} class="text-ink-500" />
+      <h2 class="text-base font-medium tracking-tight">Timeline</h2>
+    </div>
   </Cell>
 
   <Cell kind="code" count={1}>
-    <span class="text-purple-600 dark:text-purple-400">print</span>(utshav.<span class="text-blue-600 dark:text-blue-400">bio</span>)
+    <span>experience.<span class="text-blue-600 dark:text-blue-400">timeline</span>()</span>
   </Cell>
 
   <Cell kind="output" count={1} attached>
-    <p class="text-ink-700 dark:text-ink-300 leading-relaxed font-sans text-[15px] max-w-2xl">
-      {site.bio}
-    </p>
-  </Cell>
-
-  <Cell kind="code" count={2}>
-    <span>utshav.<span class="text-blue-600 dark:text-blue-400">timeline</span>()</span>
-  </Cell>
-
-  <Cell kind="output" count={2} attached>
     <ol class="not-prose relative border-l-2 border-ink-200 dark:border-ink-800 pl-6 space-y-6 ml-2">
       {
         experience.map((job) => (
@@ -54,34 +71,48 @@ import { skills, education } from "../data/skills.ts";
     </ol>
   </Cell>
 
-  <Cell kind="code" count={3}>
+  <Cell kind="markdown" count={null}>
+    <div class="flex items-center gap-2 text-ink-700 dark:text-ink-300">
+      <Icon name="sparkles" size={16} class="text-ink-500" />
+      <h2 class="text-base font-medium tracking-tight">Skills</h2>
+    </div>
+  </Cell>
+
+  <Cell kind="code" count={2}>
     <span>utshav.<span class="text-blue-600 dark:text-blue-400">skills</span></span>
   </Cell>
 
-  <Cell kind="output" count={3} attached>
-    <div class="not-prose space-y-3">
+  <Cell kind="output" count={2} attached>
+    <div class="not-prose space-y-2.5">
       {
         Object.entries(skills).map(([category, items]) => (
-          <div>
-            <span class="font-mono text-xs text-ink-500 dark:text-ink-400">{category}:</span>
-            <span class="ml-2 inline-flex flex-wrap gap-1.5">
+          <div class="flex flex-wrap items-center gap-x-2 gap-y-1.5">
+            <span class="font-mono text-xs text-ink-500 dark:text-ink-400 w-32 shrink-0">{category}:</span>
+            <div class="flex flex-wrap gap-1.5">
               {items.map((skill) => (
                 <span class="font-mono text-xs px-2 py-0.5 rounded bg-ink-100 dark:bg-ink-800 text-ink-700 dark:text-ink-300">
                   {skill}
                 </span>
               ))}
-            </span>
+            </div>
           </div>
         ))
       }
     </div>
   </Cell>
 
-  <Cell kind="code" count={4}>
+  <Cell kind="markdown" count={null}>
+    <div class="flex items-center gap-2 text-ink-700 dark:text-ink-300">
+      <Icon name="file-text" size={16} class="text-ink-500" />
+      <h2 class="text-base font-medium tracking-tight">Education</h2>
+    </div>
+  </Cell>
+
+  <Cell kind="code" count={3}>
     <span>utshav.<span class="text-blue-600 dark:text-blue-400">education</span></span>
   </Cell>
 
-  <Cell kind="output" count={4} attached>
+  <Cell kind="output" count={3} attached>
     <div class="not-prose">
       <div class="font-medium text-ink-900 dark:text-ink-100">{education.degree}</div>
       <div class="text-sm text-ink-600 dark:text-ink-400">{education.school} · {education.location}</div>

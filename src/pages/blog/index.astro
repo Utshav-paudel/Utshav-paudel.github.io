@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Cell from "../../components/Cell.astro";
+import Icon from "../../components/Icon.astro";
 import { getCollection } from "astro:content";
 import { site } from "../../data/site.ts";
 
@@ -12,10 +13,21 @@ const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
 ---
 
 <Layout filename="blog.ipynb" title={`Blog — ${site.name}`}>
-  <Cell kind="markdown" count={null}>
-    <h1 class="text-2xl font-medium tracking-tight text-ink-900 dark:text-ink-100">Blog</h1>
-    <p class="text-ink-600 dark:text-ink-400 text-sm mt-1">Notes from the kernel — on AI, building things, and the messy bits in between.</p>
-  </Cell>
+  <div class="px-4 sm:px-10 py-8 sm:py-10 border-b border-ink-200 dark:border-ink-800">
+    <div class="flex items-start justify-between gap-4 flex-wrap">
+      <div>
+        <h1 class="text-3xl font-medium tracking-tight text-ink-900 dark:text-ink-100">Blog</h1>
+        <p class="mt-2 text-ink-600 dark:text-ink-400 max-w-xl">Notes from the kernel — on AI, building things, and the messy bits in between.</p>
+      </div>
+      <a
+        href="/rss.xml"
+        class="inline-flex items-center gap-2 px-3 py-1.5 rounded-md border border-ink-300 dark:border-ink-700 text-sm hover:border-ink-500 dark:hover:border-ink-400 transition-colors"
+      >
+        <Icon name="rss" size={14} />
+        RSS
+      </a>
+    </div>
+  </div>
 
   <Cell kind="code" count={1}>
     <span>posts.</span><span class="text-blue-600 dark:text-blue-400">all</span>()

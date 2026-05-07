@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh auth *)",
+      "Bash(gh api *)",
+      "Bash(dig utshavpaudel.com.np +short +noall +answer)",
+      "Bash(dig www.utshavpaudel.com.np +short +noall +answer)",
+      "Bash(dig utshavpaudel.com.np +short)",
+      "Bash(dig www.utshavpaudel.com.np +short)",
+      "Bash(dig NS utshavpaudel.com.np +short)",
+      "Bash(npm run *)",
+      "Bash(git -c credential.helper= -c 'http.extraHeader=Authorization: Bearer __TRACKED_VAR__' push origin main)",
+      "Bash(gh run *)"
+    ]
+  }
+}
