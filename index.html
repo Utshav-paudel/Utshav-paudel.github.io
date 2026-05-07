@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Utshav Paudel — Data Scientist & ML Researcher" />
+    <title>Utshav Paudel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      :root {
+        --bg: #fafaf9;
+        --fg: #1a1a18;
+        --muted: #6b6b67;
+        --accent: #2563eb;
+        --border: #e4e4e0;
+        --mono: "JetBrains Mono", monospace;
+        --sans: "Inter", system-ui, sans-serif;
+      }
+
+      html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+
+      body {
+        background: var(--bg);
+        color: var(--fg);
+        font-family: var(--sans);
+        min-height: 100dvh;
+        display: grid;
+        grid-template-rows: 1fr auto;
+      }
+
+      main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: clamp(2rem, 8vw, 6rem) clamp(1.5rem, 6vw, 5rem);
+        max-width: 720px;
+      }
+
+      .eyebrow {
+        font-family: var(--mono);
+        font-size: 0.75rem;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+      }
+
+      .eyebrow::before {
+        content: "";
+        display: inline-block;
+        width: 1.5rem;
+        height: 1px;
+        background: var(--muted);
+      }
+
+      h1 {
+        font-size: clamp(2.2rem, 6vw, 3.5rem);
+        font-weight: 300;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        margin-bottom: 1.25rem;
+      }
+
+      h1 strong {
+        font-weight: 500;
+      }
+
+      .tagline {
+        font-size: clamp(1rem, 2.5vw, 1.15rem);
+        color: var(--muted);
+        line-height: 1.65;
+        max-width: 480px;
+        margin-bottom: 2.5rem;
+        font-weight: 300;
+      }
+
+      .links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+
+      .link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--fg);
+        text-decoration: none;
+        padding: 0.55rem 1rem;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        transition: border-color 0.15s, color 0.15s;
+        letter-spacing: 0.01em;
+      }
+
+      .link:hover { border-color: var(--fg); }
+
+      .link.primary {
+        background: var(--fg);
+        color: var(--bg);
+        border-color: var(--fg);
+      }
+
+      .link.primary:hover { opacity: 0.85; }
+
+      .link svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+      .teaser {
+        margin-top: 4rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .teaser-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        flex-shrink: 0;
+        animation: pulse 2.4s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.3; }
+      }
+
+      .teaser-text {
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        color: var(--muted);
+        letter-spacing: 0.02em;
+      }
+
+      .teaser-text strong { color: var(--fg); font-weight: 500; }
+
+      footer {
+        padding: 1.5rem clamp(1.5rem, 6vw, 5rem);
+        border-top: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      footer span {
+        font-size: 0.75rem;
+        color: var(--muted);
+        font-family: var(--mono);
+      }
+
+      @media (max-width: 480px) {
+        .links { flex-direction: column; align-items: flex-start; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow">Data Science &amp; Machine Learning</p>
+
+      <h1>Hi, I'm <strong>Utshav Paudel</strong></h1>
+
+      <p class="tagline">
+        I build systems that learn — from messy data to decisions that matter.
+        Currently exploring the intersection of AI and real-world impact.
+      </p>
+
+      <nav class="links" aria-label="Contact and profiles">
+        <a class="link primary" href="mailto:utshav@customerfirstai.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+          </svg>
+          Get in touch
+        </a>
+
+        <a class="link" href="https://github.com/utshav" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
+          GitHub
+        </a>
+
+        <a class="link" href="https://linkedin.com/in/utshavpaudel" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+            <rect x="2" y="9" width="4" height="12"/>
+            <circle cx="4" cy="4" r="2"/>
+          </svg>
+          LinkedIn
+        </a>
+      </nav>
+
+      <div class="teaser">
+        <span class="teaser-dot" aria-hidden="true"></span>
+        <p class="teaser-text">
+          <strong>Something is being built here</strong> — an interactive notebook-style portfolio with projects, writing, and more.
+        </p>
+      </div>
+    </main>
+
+    <footer>
+      <span>utshavpaudel.com.np</span>
+      <span>Utshav Paudel &copy; 2026</span>
+    </footer>
+  </body>
+</html>
