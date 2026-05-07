@@ -1,0 +1,70 @@
+---
+import type { Project } from "../data/projects.ts";
+import Icon from "./Icon.astro";
+import { site } from "../data/site.ts";
+
+interface Props {
+  project: Project;
+}
+const { project } = Astro.props;
+const href = project.url ?? `https://github.com/${site.github}`;
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener"
+  class="not-prose group block rounded-lg border border-ink-200 dark:border-ink-800 p-4 sm:p-5 hover:border-ink-300 dark:hover:border-ink-700 transition-all hover:shadow-sm"
+>
+  <div class="flex items-start gap-3">
+    {project.glyph && (
+      <div
+        class:list={[
+          "shrink-0 w-10 h-10 rounded-md flex items-center justify-center text-lg",
+          project.glyphAccent ?? "bg-ink-100 text-ink-700 dark:bg-ink-800 dark:text-ink-300",
+        ]}
+        aria-hidden="true"
+      >
+        {project.glyph}
+      </div>
+    )}
+    <div class="min-w-0 flex-1">
+      <div class="flex items-start justify-between gap-2">
+        <div class="min-w-0">
+          <h3 class="font-medium text-ink-900 dark:text-ink-100 text-base leading-tight">
+            {project.name}
+          </h3>
+          {project.domain && (
+            <span
+              class:list={[
+                "inline-block mt-1.5 font-mono text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded",
+                project.domainAccent ?? "bg-ink-100 text-ink-700 dark:bg-ink-800 dark:text-ink-300",
+              ]}
+            >
+              {project.domain}
+            </span>
+          )}
+        </div>
+        <Icon
+          name="external"
+          size={14}
+          class="text-ink-400 group-hover:text-ink-700 dark:group-hover:text-ink-200 transition-colors mt-1 shrink-0"
+        />
+      </div>
+    </div>
+  </div>
+
+  <p class="mt-3 text-sm text-ink-700 dark:text-ink-300 leading-relaxed">
+    {project.tagline}
+  </p>
+
+  <div class="mt-3 flex flex-wrap gap-1.5">
+    {
+      project.stack.map((t) => (
+        <span class="font-mono text-[10.5px] px-1.5 py-0.5 rounded bg-ink-50 dark:bg-ink-900 border border-ink-200 dark:border-ink-800 text-ink-600 dark:text-ink-400">
+          {t}
+        </span>
+      ))
+    }
+  </div>
+</a>

@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Cell from "../components/Cell.astro";
 import Icon from "../components/Icon.astro";
+import ExperienceCard from "../components/ExperienceCard.astro";
 import { site } from "../data/site.ts";
 import { experience } from "../data/experience.ts";
 import { skills, education } from "../data/skills.ts";
@@ -44,31 +45,9 @@ import { skills, education } from "../data/skills.ts";
   </Cell>
 
   <Cell kind="output" count={1} attached>
-    <ol class="not-prose relative border-l-2 border-ink-200 dark:border-ink-800 pl-6 space-y-6 ml-2">
-      {
-        experience.map((job) => (
-          <li class="relative">
-            <span class="absolute -left-[33px] top-1.5 w-3 h-3 rounded-full bg-white dark:bg-ink-900 border-2 border-blue-500 dark:border-blue-400"></span>
-            <div class="font-mono text-[11px] text-ink-500 dark:text-ink-400">
-              {job.start} → {job.end} · {job.location}
-            </div>
-            <div class="mt-1">
-              <span class="font-medium text-ink-900 dark:text-ink-100">{job.role}</span>
-              <span class="text-ink-500"> @ </span>
-              <span class="text-blue-700 dark:text-blue-400 font-medium">{job.company}</span>
-            </div>
-            <ul class="mt-2 space-y-1.5 text-sm text-ink-700 dark:text-ink-300 leading-relaxed">
-              {job.bullets.map((b) => (
-                <li class="flex gap-2">
-                  <span class="text-ink-400 select-none">›</span>
-                  <span>{b}</span>
-                </li>
-              ))}
-            </ul>
-          </li>
-        ))
-      }
-    </ol>
+    <div class="not-prose space-y-3">
+      {experience.map((job) => <ExperienceCard job={job} expanded={true} />)}
+    </div>
   </Cell>
 
   <Cell kind="markdown" count={null}>
