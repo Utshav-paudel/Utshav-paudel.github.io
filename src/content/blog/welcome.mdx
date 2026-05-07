@@ -1,0 +1,39 @@
+---
+title: "Hello, world — opening the notebook"
+description: "Why this site is a notebook, and what I plan to write here."
+pubDate: 2026-05-08
+tags: ["meta", "writing"]
+---
+
+There's a Jupyter notebook open on my laptop right now. There has been one open, basically, for the last four years. Notebooks are where I think — where the half-formed idea becomes a chart becomes a model becomes an argument I can defend.
+
+So when I sat down to redo my site, the question was: what would it look like if my notebook *was* my site? Not "styled to look like" one — actually structured like one. Cells you can read top-to-bottom. A kernel status in the corner. Code that's there because the page genuinely is computed from data.
+
+That's what this is.
+
+## What I'll write about
+
+Three loose buckets:
+
+1. **Building with LLMs in production** — I'm currently shipping a clinical-automation platform for an NHS pilot at MedForce AI. The space between "demo on Twitter" and "a doctor uses this to make a real decision" is where most of my interesting problems live. I'll write about the ones I can talk about.
+
+2. **Things I've learned the slow way** — Fine-tuning costs you forget to budget for. Why your RAG is bad and you didn't know. The eval setup you should have built first.
+
+3. **Field notes from Kathmandu** — Building AI products from Nepal has its own texture: timezones, infrastructure, the talent pool, what the local startup scene actually feels like vs. what people imagine. I want more honest writing about this.
+
+## How the blog works
+
+Every post is an `.mdx` file in this repo. I push to GitHub, and a GitHub Action rebuilds the site. No CMS, no database, no analytics-ad-tracker pipeline. The whole thing is static HTML on GitHub Pages.
+
+You can:
+
+- Subscribe via [RSS](/rss.xml) — old internet still works.
+- Email me: <a href="mailto:utshav.paudel466@gmail.com">utshav.paudel466@gmail.com</a>
+- Find me on [GitHub](https://github.com/Utshav-paudel) or [LinkedIn](https://linkedin.com/in/utshav-paudel)
+
+```python
+# the only setup ritual I have for a new post
+$ touch src/content/blog/$(date +%Y-%m-%d)-idea.mdx
+```
+
+That's the whole pipeline. See you in the next cell.

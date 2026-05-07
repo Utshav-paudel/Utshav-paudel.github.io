@@ -1,0 +1,188 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Cell from "../components/Cell.astro";
+import { site } from "../data/site.ts";
+import { experience } from "../data/experience.ts";
+import { projects } from "../data/projects.ts";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+---
+
+<Layout filename="home.ipynb">
+  {/* ---- Cell 1: identity / hero ---- */}
+  <Cell kind="code" count={1}>
+    <span class="text-purple-600 dark:text-purple-400">from</span>
+    <span> utshav </span>
+    <span class="text-purple-600 dark:text-purple-400">import</span>
+    <span> introduce</span><br />
+    <span>introduce.</span><span class="text-blue-600 dark:text-blue-400">me</span>()
+  </Cell>
+
+  <Cell kind="output" count={1} attached>
+    <div class="flex items-start gap-5 not-prose">
+      <img
+        src={site.avatarUrl}
+        alt={site.name}
+        width="96"
+        height="96"
+        loading="eager"
+        class="rounded-full ring-2 ring-ink-200 dark:ring-ink-800 shrink-0"
+      />
+      <div class="min-w-0 font-sans">
+        <h1 class="text-2xl sm:text-3xl font-medium tracking-tight text-ink-900 dark:text-ink-100">
+          {site.name}
+        </h1>
+        <p class="text-ink-600 dark:text-ink-400 text-sm mt-1">
+          {site.role} · {site.location}
+        </p>
+        <p class="mt-3 text-ink-700 dark:text-ink-300 leading-relaxed text-[15px] max-w-2xl">
+          {site.bio}
+        </p>
+        <div class="mt-4 flex flex-wrap gap-2 font-mono text-xs">
+          <a
+            href={`mailto:${site.email}`}
+            class="px-3 py-1.5 rounded border border-ink-300 dark:border-ink-700 hover:border-ink-500 dark:hover:border-ink-400 transition-colors"
+          >
+            ✉ email
+          </a>
+          <a
+            href={`https://github.com/${site.github}`}
+            target="_blank"
+            rel="noopener"
+            class="px-3 py-1.5 rounded border border-ink-300 dark:border-ink-700 hover:border-ink-500 dark:hover:border-ink-400 transition-colors"
+          >
+            ⌥ github
+          </a>
+          <a
+            href={`https://linkedin.com/in/${site.linkedin}`}
+            target="_blank"
+            rel="noopener"
+            class="px-3 py-1.5 rounded border border-ink-300 dark:border-ink-700 hover:border-ink-500 dark:hover:border-ink-400 transition-colors"
+          >
+            in linkedin
+          </a>
+        </div>
+      </div>
+    </div>
+  </Cell>
+
+  {/* ---- Cell 2: experience as DataFrame ---- */}
+  <Cell kind="markdown" count={null}>
+    <h2 class="text-sm font-mono uppercase tracking-wider text-ink-500 dark:text-ink-400 mb-1"># experience</h2>
+    <p class="text-ink-600 dark:text-ink-400 text-sm">A view of <code>experience_df</code>.</p>
+  </Cell>
+
+  <Cell kind="code" count={2}>
+    <span>experience_df.</span><span class="text-blue-600 dark:text-blue-400">head</span>()
+  </Cell>
+
+  <Cell kind="output" count={2} attached>
+    <div class="not-prose overflow-x-auto -mx-2">
+      <table class="min-w-full text-xs sm:text-[13px] font-mono border-separate border-spacing-0">
+        <thead>
+          <tr class="text-ink-500 dark:text-ink-400">
+            <th class="text-left font-medium px-2 py-2 border-b border-ink-200 dark:border-ink-800">#</th>
+            <th class="text-left font-medium px-2 py-2 border-b border-ink-200 dark:border-ink-800">role</th>
+            <th class="text-left font-medium px-2 py-2 border-b border-ink-200 dark:border-ink-800">company</th>
+            <th class="text-left font-medium px-2 py-2 border-b border-ink-200 dark:border-ink-800 hidden sm:table-cell">location</th>
+            <th class="text-left font-medium px-2 py-2 border-b border-ink-200 dark:border-ink-800">period</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            experience.map((row, i) => (
+              <tr class="hover:bg-ink-50 dark:hover:bg-ink-800/40">
+                <td class="text-ink-400 dark:text-ink-500 px-2 py-2 align-top">{i}</td>
+                <td class="text-ink-900 dark:text-ink-100 px-2 py-2 align-top">{row.role}</td>
+                <td class="text-blue-700 dark:text-blue-400 px-2 py-2 align-top">{row.company}</td>
+                <td class="text-ink-600 dark:text-ink-400 px-2 py-2 align-top hidden sm:table-cell">{row.location}</td>
+                <td class="text-ink-600 dark:text-ink-400 px-2 py-2 align-top whitespace-nowrap">{row.start} – {row.end}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </Cell>
+
+  {/* ---- Cell 3: projects ---- */}
+  <Cell kind="markdown" count={null}>
+    <h2 class="text-sm font-mono uppercase tracking-wider text-ink-500 dark:text-ink-400 mb-1"># projects</h2>
+    <p class="text-ink-600 dark:text-ink-400 text-sm">Selected work — code is on <a class="underline decoration-dotted" href={`https://github.com/${site.github}`}>github</a>.</p>
+  </Cell>
+
+  <Cell kind="code" count={3}>
+    <span>projects.</span><span class="text-blue-600 dark:text-blue-400">filter</span>(<span class="text-emerald-600 dark:text-emerald-400">"featured"</span>)
+  </Cell>
+
+  <Cell kind="output" count={3} attached>
+    <div class="not-prose grid sm:grid-cols-2 gap-3">
+      {
+        projects.map((p) => (
+          <a
+            href={p.url ?? `https://github.com/${site.github}`}
+            target="_blank"
+            rel="noopener"
+            class="group block rounded-md border border-ink-200 dark:border-ink-800 p-4 hover:border-ink-400 dark:hover:border-ink-600 transition-colors"
+          >
+            <div class="flex items-start justify-between gap-2">
+              <h3 class="font-mono text-sm font-medium text-ink-900 dark:text-ink-100">{p.name}</h3>
+              <span class="text-ink-400 group-hover:text-ink-600 dark:group-hover:text-ink-300 transition-colors">↗</span>
+            </div>
+            <p class="text-xs text-ink-600 dark:text-ink-400 mt-1 leading-relaxed">{p.tagline}</p>
+            <div class="mt-2 flex flex-wrap gap-1">
+              {p.stack.map((t) => (
+                <span class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-ink-100 dark:bg-ink-800 text-ink-600 dark:text-ink-400">
+                  {t}
+                </span>
+              ))}
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </Cell>
+
+  {/* ---- Cell 4: blog ---- */}
+  <Cell kind="markdown" count={null}>
+    <h2 class="text-sm font-mono uppercase tracking-wider text-ink-500 dark:text-ink-400 mb-1"># writing</h2>
+    <p class="text-ink-600 dark:text-ink-400 text-sm">Recent posts.</p>
+  </Cell>
+
+  <Cell kind="code" count={4}>
+    <span>posts.</span><span class="text-blue-600 dark:text-blue-400">recent</span>(n=<span class="text-amber-600 dark:text-amber-400">3</span>)
+  </Cell>
+
+  <Cell kind="output" count={4} attached>
+    {posts.length === 0 ? (
+      <p class="text-ink-500 italic">[]  # no posts yet — the kernel is warming up.</p>
+    ) : (
+      <ul class="not-prose space-y-3">
+        {posts.map((post) => (
+          <li>
+            <a
+              href={`/blog/${post.slug}/`}
+              class="group block rounded-md border border-ink-200 dark:border-ink-800 p-4 hover:border-ink-400 dark:hover:border-ink-600 transition-colors"
+            >
+              <div class="flex items-baseline justify-between gap-3">
+                <h3 class="font-sans text-base font-medium text-ink-900 dark:text-ink-100 group-hover:underline decoration-dotted">
+                  {post.data.title}
+                </h3>
+                <time class="font-mono text-xs text-ink-500 dark:text-ink-500 shrink-0" datetime={post.data.pubDate.toISOString()}>
+                  {post.data.pubDate.toISOString().slice(0, 10)}
+                </time>
+              </div>
+              <p class="text-sm text-ink-600 dark:text-ink-400 mt-1">{post.data.description}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
+    <div class="mt-4 font-mono text-xs">
+      <a href="/blog/" class="text-blue-600 dark:text-blue-400 hover:underline">→ all posts</a>
+    </div>
+  </Cell>
+</Layout>

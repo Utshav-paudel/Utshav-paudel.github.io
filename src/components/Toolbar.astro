@@ -1,0 +1,64 @@
+---
+import ThemeToggle from "./ThemeToggle.astro";
+import { nav } from "../data/site.ts";
+
+interface Props {
+  filename: string;
+}
+const { filename } = Astro.props;
+const path = Astro.url.pathname;
+---
+
+<header class="toolbar sticky top-0 z-30 backdrop-blur-md bg-ink-50/85 dark:bg-ink-950/85 border-b border-ink-200 dark:border-ink-800">
+  <div class="mx-auto max-w-5xl px-4 sm:px-6">
+    <div class="flex items-center justify-between h-12 gap-4">
+      <div class="flex items-center gap-2 min-w-0">
+        <div class="flex gap-1.5 shrink-0" aria-hidden="true">
+          <span class="w-2.5 h-2.5 rounded-full bg-rose-400 dark:bg-rose-500"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-400 dark:bg-amber-500"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 dark:bg-emerald-500"></span>
+        </div>
+        <span class="font-mono text-xs text-ink-500 dark:text-ink-400 truncate">
+          {filename}
+        </span>
+      </div>
+
+      <nav class="flex items-center gap-1 sm:gap-2" aria-label="Primary">
+        {
+          nav.map((item) => {
+            const active =
+              item.href === "/"
+                ? path === "/"
+                : path.startsWith(item.href);
+            return (
+              <a
+                href={item.href}
+                class:list={[
+                  "font-mono text-xs px-2.5 py-1.5 rounded transition-colors",
+                  active
+                    ? "bg-ink-200 dark:bg-ink-800 text-ink-900 dark:text-ink-100"
+                    : "text-ink-600 dark:text-ink-400 hover:text-ink-900 dark:hover:text-ink-100",
+                ]}
+              >
+                {item.label}
+              </a>
+            );
+          })
+        }
+        <ThemeToggle />
+      </nav>
+    </div>
+
+    <div class="flex items-center gap-2 h-8 -mt-px border-t border-ink-200 dark:border-ink-800 text-[11px] font-mono text-ink-500 dark:text-ink-400">
+      <span class="px-1">File</span>
+      <span class="px-1">Edit</span>
+      <span class="px-1">View</span>
+      <span class="px-1">Run</span>
+      <span class="px-1">Kernel</span>
+      <span class="ml-auto flex items-center gap-1.5">
+        <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span>kernel: utshav · idle</span>
+      </span>
+    </div>
+  </div>
+</header>

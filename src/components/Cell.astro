@@ -1,0 +1,52 @@
+---
+type Kind = "code" | "markdown" | "output";
+
+interface Props {
+  kind: Kind;
+  /** Execution counter shown on the left, e.g. 1, 2, "*". Pass null to hide. */
+  count?: number | string | null;
+  /** Visually associate this output with the cell above (no top border). */
+  attached?: boolean;
+}
+
+const { kind, count = null, attached = false } = Astro.props;
+
+const counterText =
+  count === null
+    ? ""
+    : kind === "code"
+      ? `In [${count}]:`
+      : kind === "output"
+        ? `Out[${count}]:`
+        : "";
+
+const containerClass = [
+  "cell group relative flex gap-3 sm:gap-5 px-4 sm:px-6 py-4",
+  attached ? "" : "border-t border-ink-200 dark:border-ink-800",
+].join(" ");
+
+const counterClass = [
+  "cell-counter pt-1 w-12 sm:w-16 shrink-0 text-right tabular-nums",
+  kind === "code"
+    ? "text-blue-600 dark:text-blue-400"
+    : kind === "output"
+      ? "text-rose-600 dark:text-rose-400"
+      : "text-transparent",
+].join(" ");
+
+const bodyClass =
+  kind === "markdown"
+    ? "min-w-0 flex-1 font-sans leading-relaxed"
+    : kind === "code"
+      ? "min-w-0 flex-1 font-mono text-sm leading-relaxed bg-ink-100/60 dark:bg-ink-900/60 rounded-md border border-ink-200 dark:border-ink-800 px-4 py-3 overflow-x-auto"
+      : "min-w-0 flex-1 font-mono text-sm leading-relaxed text-ink-700 dark:text-ink-300";
+---
+
+<div class={containerClass} data-cell-kind={kind}>
+  <div class={counterClass} aria-hidden={!counterText}>
+    {counterText}
+  </div>
+  <div class={bodyClass}>
+    <slot />
+  </div>
+</div>

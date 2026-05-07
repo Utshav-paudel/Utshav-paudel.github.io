@@ -1,0 +1,76 @@
+---
+import "../styles/global.css";
+import Toolbar from "../components/Toolbar.astro";
+import { site } from "../data/site.ts";
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Notebook filename shown in the toolbar (e.g. "home.ipynb"). */
+  filename?: string;
+}
+
+const {
+  title = site.title,
+  description = site.description,
+  filename = "notebook.ipynb",
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, site.url).toString();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={site.avatarUrl} />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title={site.name} href="/rss.xml" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <script is:inline>
+      // Apply theme as early as possible to avoid flash
+      (() => {
+        try {
+          const stored = localStorage.getItem("theme");
+          const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          const theme = stored ?? (prefersDark ? "dark" : "light");
+          if (theme === "dark") document.documentElement.classList.add("dark");
+        } catch (_) {}
+      })();
+    </script>
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <Toolbar filename={filename} />
+
+    <main class="flex-1">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6 py-8">
+        <article class="bg-white dark:bg-ink-900 border border-ink-200 dark:border-ink-800 rounded-lg shadow-sm overflow-hidden">
+          <slot />
+        </article>
+      </div>
+    </main>
+
+    <footer class="border-t border-ink-200 dark:border-ink-800 mt-8">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] text-ink-500 dark:text-ink-400">
+        <span>{site.name} · {site.location}</span>
+        <span>built with astro · last kernel restart {new Date().getFullYear()}</span>
+      </div>
+    </footer>
+  </body>
+</html>
