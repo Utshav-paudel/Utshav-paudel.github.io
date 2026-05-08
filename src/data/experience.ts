@@ -10,6 +10,8 @@ export type Experience = {
    * Right-click the company logo on LinkedIn → "Copy image URL".
    */
   logoUrl?: string;
+  /** Tailwind class for the logo avatar background. Use 'bg-ink-900' for white-on-transparent logos. */
+  logoBg?: string;
   location: string;
   start: string;
   end: string;
@@ -41,6 +43,7 @@ export const experience: Experience[] = [
     companyUrl: "https://digital-dandelion.com/",
     companyDomain: "digital-dandelion.com",
     logoUrl: "https://digital-dandelion.com/img/digital-dandelion-logo.svg",
+    logoBg: "bg-ink-900",
     location: "London, UK · Remote",
     start: "Feb 2024",
     end: "Jun 2025",

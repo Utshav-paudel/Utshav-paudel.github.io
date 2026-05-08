@@ -4,6 +4,8 @@ interface Props {
   domain?: string;
   /** Manual logo URL override. Wins over the favicon-derived URL. */
   logoUrl?: string;
+  /** Tailwind classes for the avatar background. Defaults to white. */
+  bgClass?: string;
   /** Name (used for alt text and fallback initial). */
   name: string;
   /** Diameter in pixels. */
@@ -11,7 +13,14 @@ interface Props {
   class?: string;
 }
 
-const { domain, logoUrl: manualUrl, name, size = 44, class: className = "" } = Astro.props;
+const {
+  domain,
+  logoUrl: manualUrl,
+  bgClass = "bg-white",
+  name,
+  size = 44,
+  class: className = "",
+} = Astro.props;
 
 const fallbackFavicon = domain
   ? `https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=256&url=https://${domain}`
@@ -19,17 +28,18 @@ const fallbackFavicon = domain
 const logoUrl = manualUrl ?? fallbackFavicon;
 const initial = name.charAt(0).toUpperCase();
 
-// Manual URLs are typically horizontal brand-wordmarks pulled from a site
-// header — they need padding + object-contain to render readably.
-// Favicons are square icons — they should fill the avatar with object-cover.
 const imgClass = manualUrl
   ? "w-full h-full object-contain p-1"
   : "w-full h-full object-cover";
+
+const isDarkBg = bgClass.includes("ink-9") || bgClass.includes("black");
+const fallbackTextClass = isDarkBg ? "text-ink-100" : "text-ink-700";
 ---
 
 <span
   class:list={[
-    "logo-avatar relative shrink-0 inline-flex items-center justify-center rounded-md overflow-hidden bg-white ring-1 ring-ink-200 dark:ring-ink-700",
+    "logo-avatar relative shrink-0 inline-flex items-center justify-center rounded-md overflow-hidden ring-1 ring-ink-200 dark:ring-ink-700",
+    bgClass,
     className,
   ]}
   style={`width:${size}px;height:${size}px;`}
@@ -47,14 +57,17 @@ const imgClass = manualUrl
           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
         />
         <span
-          class="hidden absolute inset-0 items-center justify-center font-mono font-semibold text-ink-700 select-none"
+          class:list={[
+            "hidden absolute inset-0 items-center justify-center font-mono font-semibold select-none",
+            fallbackTextClass,
+          ]}
           aria-hidden="true"
         >
           {initial}
         </span>
       </>
     ) : (
-      <span class="font-mono font-semibold text-ink-700 select-none" aria-hidden="true">
+      <span class:list={["font-mono font-semibold select-none", fallbackTextClass]} aria-hidden="true">
         {initial}
       </span>
     )
