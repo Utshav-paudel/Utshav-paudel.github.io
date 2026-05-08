@@ -19,7 +19,7 @@ export const site = {
    * Add a site → Manual setup → copy the value of `data-cf-beacon` (a 32-char hex token).
    * Paste it here. Leave empty string to disable analytics.
    */
-  cloudflareAnalyticsToken: "",
+  cloudflareAnalyticsToken: "adf091c437fa4f0cb502e982c5bf5d36",
 };
 
 export const nav = [
