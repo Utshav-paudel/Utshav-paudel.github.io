@@ -1,0 +1,35 @@
+---
+interface Props {
+  /** Domain for Clearbit logo, e.g. 'medforce-ai.com'. */
+  domain: string;
+  /** Company name (used for alt text and fallback initial). */
+  name: string;
+  /** Diameter in pixels. */
+  size?: number;
+  class?: string;
+}
+
+const { domain, name, size = 44, class: className = "" } = Astro.props;
+const logoUrl = `https://logo.clearbit.com/${domain}?size=128`;
+const initial = name.charAt(0).toUpperCase();
+---
+
+<span
+  class:list={[
+    "shrink-0 inline-flex items-center justify-center rounded-md overflow-hidden bg-white dark:bg-ink-800 border border-ink-200 dark:border-ink-700 font-mono font-semibold text-ink-700 dark:text-ink-300 select-none",
+    className,
+  ]}
+  style={`width:${size}px;height:${size}px;`}
+  data-fallback={initial}
+  aria-hidden="true"
+>
+  <img
+    src={logoUrl}
+    alt={`${name} logo`}
+    width={size}
+    height={size}
+    loading="lazy"
+    class="w-full h-full object-contain"
+    onerror="this.style.display='none';this.parentElement.dataset.fallbackVisible='1';this.parentElement.textContent=this.parentElement.dataset.fallback;"
+  />
+</span>

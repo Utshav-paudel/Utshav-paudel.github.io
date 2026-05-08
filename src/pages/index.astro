@@ -35,7 +35,7 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft))
           Hi, I'm {site.name.split(" ")[0]}.
         </h1>
         <p class="mt-3 text-lg text-ink-700 dark:text-ink-300 leading-relaxed max-w-2xl">
-          AI Engineer at <a href="https://medforce.ai" target="_blank" rel="noopener" class="text-blue-600 dark:text-blue-400 hover:underline decoration-dotted">MedForce AI</a> building generative-AI for clinicians. Based in Kathmandu.
+          AI Engineer at <a href="https://www.medforce-ai.com/" target="_blank" rel="noopener" class="text-blue-600 dark:text-blue-400 hover:underline decoration-dotted underline-offset-2">MedForce AI</a> building generative-AI for clinicians. Based in Kathmandu.
         </p>
 
         <div class="mt-6 flex flex-wrap gap-2">
@@ -98,7 +98,7 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft))
 
   <Cell kind="output" count={1} attached>
     <div class="not-prose space-y-3">
-      {experience.slice(0, 3).map((job) => <ExperienceCard job={job} expanded={true} />)}
+      {experience.slice(0, 3).map((job) => <ExperienceCard job={job} />)}
     </div>
     <p class="font-mono text-[11px] text-ink-500 dark:text-ink-400 mt-4 not-prose flex items-center gap-1">
       <a href="/about/" class="text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1">

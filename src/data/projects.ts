@@ -30,7 +30,7 @@ export const projects: Project[] = [
   },
   {
     name: "Mistral-7B Private RAG",
-    tagline: "Local-first Q&A over private documents — nothing leaves the box.",
+    tagline: "Local-first Q&A over private documents. Nothing leaves the box.",
     stack: ["Mistral-7B", "LangChain", "Quantization"],
     highlights: [
       "Privacy-focused chatbot answering from private corpora without external API calls.",

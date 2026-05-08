@@ -1,0 +1,23 @@
+---
+import type { Skill } from "../data/skills.ts";
+
+interface Props {
+  skill: Skill;
+}
+
+const { skill } = Astro.props;
+const iconUrl = skill.devicon
+  ? `https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/${skill.devicon}.svg`
+  : null;
+---
+
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border border-ink-200 dark:border-ink-800 bg-white dark:bg-ink-900 text-[13px] text-ink-800 dark:text-ink-200">
+  {
+    iconUrl ? (
+      <img src={iconUrl} alt="" width="14" height="14" loading="lazy" class="shrink-0" />
+    ) : (
+      <span class="w-1.5 h-1.5 rounded-full bg-ink-400 dark:bg-ink-600 shrink-0" aria-hidden="true" />
+    )
+  }
+  <span>{skill.name}</span>
+</span>

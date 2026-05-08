@@ -20,7 +20,7 @@ const date = post.data.pubDate.toISOString().slice(0, 10);
 
 <Layout
   filename={`${post.slug}.ipynb`}
-  title={`${post.data.title} — ${site.name}`}
+  title={`${post.data.title} · ${site.name}`}
   description={post.data.description}
 >
   <Cell kind="markdown" count={null}>

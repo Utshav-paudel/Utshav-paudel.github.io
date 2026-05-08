@@ -1,9 +1,50 @@
-export const skills = {
-  Languages: ["Python", "SQL", "TypeScript", "C++"],
-  "AI / ML": ["LLMs", "LangChain", "RAG", "NLP", "Computer Vision", "Supervised Learning"],
-  "Cloud / DevOps": ["GCP", "MLOps", "Docker", "Git"],
-  Frameworks: ["FastAPI", "PyTorch", "TensorFlow", "Pandas", "NumPy", "Scikit-learn"],
+export type Skill = {
+  name: string;
+  /** Devicon path, e.g. 'python/python-original'. Renders as SVG. */
+  devicon?: string;
 };
+
+export type SkillGroup = {
+  category: string;
+  items: Skill[];
+};
+
+export const skillGroups: SkillGroup[] = [
+  {
+    category: "Languages",
+    items: [
+      { name: "Python", devicon: "python/python-original" },
+      { name: "TypeScript", devicon: "typescript/typescript-original" },
+      { name: "SQL", devicon: "postgresql/postgresql-original" },
+      { name: "C++", devicon: "cplusplus/cplusplus-original" },
+    ],
+  },
+  {
+    category: "AI & ML",
+    items: [
+      { name: "PyTorch", devicon: "pytorch/pytorch-original" },
+      { name: "TensorFlow", devicon: "tensorflow/tensorflow-original" },
+      { name: "Scikit-learn", devicon: "scikitlearn/scikitlearn-original" },
+      { name: "Pandas", devicon: "pandas/pandas-original" },
+      { name: "NumPy", devicon: "numpy/numpy-original" },
+      { name: "LLMs" },
+      { name: "RAG" },
+      { name: "LangChain" },
+      { name: "NLP" },
+      { name: "Computer Vision" },
+    ],
+  },
+  {
+    category: "Backend & Infra",
+    items: [
+      { name: "FastAPI", devicon: "fastapi/fastapi-original" },
+      { name: "Docker", devicon: "docker/docker-original" },
+      { name: "Google Cloud", devicon: "googlecloud/googlecloud-original" },
+      { name: "Git", devicon: "git/git-original" },
+      { name: "MLOps" },
+    ],
+  },
+];
 
 export const education = {
   school: "Madan Bhandari Memorial College",
