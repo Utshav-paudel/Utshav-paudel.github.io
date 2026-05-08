@@ -7,11 +7,9 @@ import ProjectCard from "../components/ProjectCard.astro";
 import { site } from "../data/site.ts";
 import { experience } from "../data/experience.ts";
 import { projects } from "../data/projects.ts";
-import { getCollection } from "astro:content";
+import { listPosts } from "../lib/hashnode.ts";
 
-const posts = (await getCollection("blog", ({ data }) => !data.draft))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 3);
+const posts = (await listPosts(3)).slice(0, 3);
 ---
 
 <Layout filename="home.ipynb">
@@ -150,13 +148,13 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft))
             >
               <div class="flex items-baseline justify-between gap-3">
                 <h3 class="font-sans text-base font-medium text-ink-900 dark:text-ink-100 group-hover:underline decoration-dotted">
-                  {post.data.title}
+                  {post.title}
                 </h3>
-                <time class="font-mono text-xs text-ink-500 shrink-0" datetime={post.data.pubDate.toISOString()}>
-                  {post.data.pubDate.toISOString().slice(0, 10)}
+                <time class="font-mono text-xs text-ink-500 shrink-0" datetime={post.publishedAt}>
+                  {post.publishedAt.slice(0, 10)}
                 </time>
               </div>
-              <p class="text-sm text-ink-600 dark:text-ink-400 mt-0.5 line-clamp-2">{post.data.description}</p>
+              <p class="text-sm text-ink-600 dark:text-ink-400 mt-0.5 line-clamp-2">{post.brief}</p>
             </a>
           </li>
         ))}

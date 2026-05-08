@@ -2,14 +2,15 @@
 import Layout from "../../layouts/Layout.astro";
 import Cell from "../../components/Cell.astro";
 import Icon from "../../components/Icon.astro";
-import { getCollection } from "astro:content";
+import { listPosts } from "../../lib/hashnode.ts";
 import { site } from "../../data/site.ts";
 
-const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
-
-const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
+const posts = await listPosts();
+const allTags = [
+  ...new Map(
+    posts.flatMap((p) => p.tags.map((t) => [t.slug, t])),
+  ).values(),
+].sort((a, b) => a.name.localeCompare(b.name));
 ---
 
 <Layout filename="blog.ipynb" title={`Blog · ${site.name}`}>
@@ -17,7 +18,9 @@ const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
     <div class="flex items-start justify-between gap-4 flex-wrap">
       <div>
         <h1 class="text-3xl font-medium tracking-tight text-ink-900 dark:text-ink-100">Blog</h1>
-        <p class="mt-2 text-ink-600 dark:text-ink-400 max-w-xl">Notes from the kernel. On AI, building things, and the messy bits in between.</p>
+        <p class="mt-2 text-ink-600 dark:text-ink-400 max-w-xl">
+          Notes from the kernel. On AI, building things, and the messy bits in between.
+        </p>
       </div>
       <a
         href="/rss.xml"
@@ -46,22 +49,26 @@ const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
             >
               <div class="flex items-baseline justify-between gap-3">
                 <h2 class="font-sans text-lg font-medium text-ink-900 dark:text-ink-100 group-hover:underline decoration-dotted">
-                  {post.data.title}
+                  {post.title}
                 </h2>
-                <time class="font-mono text-xs text-ink-500 shrink-0" datetime={post.data.pubDate.toISOString()}>
-                  {post.data.pubDate.toISOString().slice(0, 10)}
+                <time class="font-mono text-xs text-ink-500 shrink-0" datetime={post.publishedAt}>
+                  {post.publishedAt.slice(0, 10)}
                 </time>
               </div>
-              <p class="text-sm text-ink-600 dark:text-ink-400 mt-1 leading-relaxed">{post.data.description}</p>
-              {post.data.tags.length > 0 && (
-                <div class="mt-2 flex flex-wrap gap-1">
-                  {post.data.tags.map((t) => (
-                    <span class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-ink-100 dark:bg-ink-800 text-ink-600 dark:text-ink-400">
-                      #{t}
+              <p class="text-sm text-ink-600 dark:text-ink-400 mt-1 leading-relaxed">{post.brief}</p>
+              <div class="mt-2 flex flex-wrap items-center gap-2 text-xs text-ink-500">
+                <span class="font-mono">{post.readTimeInMinutes} min read</span>
+                {post.tags.length > 0 && (
+                  <>
+                    <span aria-hidden="true">·</span>
+                    <span class="flex flex-wrap gap-1">
+                      {post.tags.map((t) => (
+                        <span class="font-mono">#{t.slug}</span>
+                      ))}
                     </span>
-                  ))}
-                </div>
-              )}
+                  </>
+                )}
+              </div>
             </a>
           </li>
         ))}
@@ -78,7 +85,7 @@ const allTags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
         <div class="flex flex-wrap gap-2 not-prose">
           {allTags.map((t) => (
             <span class="font-mono text-xs px-2 py-1 rounded bg-ink-100 dark:bg-ink-800 text-ink-700 dark:text-ink-300">
-              #{t}
+              #{t.slug}
             </span>
           ))}
         </div>

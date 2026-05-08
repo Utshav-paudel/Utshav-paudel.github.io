@@ -1,48 +1,63 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Cell from "../../components/Cell.astro";
+import { listPosts, type HashnodePost } from "../../lib/hashnode.ts";
 import { site } from "../../data/site.ts";
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  const posts = await listPosts();
   return posts.map((post) => ({
     params: { slug: post.slug },
     props: { post },
   }));
 }
 
-type Props = { post: CollectionEntry<"blog"> };
+type Props = { post: HashnodePost };
 const { post } = Astro.props;
-const { Content } = await post.render();
-const date = post.data.pubDate.toISOString().slice(0, 10);
+const date = post.publishedAt.slice(0, 10);
+const hashnodeUrl = `https://utshavpaudel.hashnode.dev/${post.slug}`;
 ---
 
 <Layout
   filename={`${post.slug}.ipynb`}
-  title={`${post.data.title} · ${site.name}`}
-  description={post.data.description}
+  title={`${post.title} · ${site.name}`}
+  description={post.brief}
 >
   <Cell kind="markdown" count={null}>
     <div class="font-mono text-[11px] text-ink-500 dark:text-ink-400">
       <a href="/blog/" class="hover:underline">../blog</a> / {post.slug}.ipynb
     </div>
     <h1 class="mt-3 text-3xl sm:text-4xl font-medium tracking-tight text-ink-900 dark:text-ink-100 leading-tight">
-      {post.data.title}
+      {post.title}
     </h1>
-    <p class="mt-3 text-ink-600 dark:text-ink-400 text-base">{post.data.description}</p>
+    {post.brief && (
+      <p class="mt-3 text-ink-600 dark:text-ink-400 text-base leading-relaxed">{post.brief}</p>
+    )}
     <div class="mt-4 flex flex-wrap items-center gap-3 font-mono text-xs text-ink-500">
-      <time datetime={post.data.pubDate.toISOString()}>{date}</time>
-      {post.data.tags.length > 0 && (
+      <time datetime={post.publishedAt}>{date}</time>
+      <span aria-hidden="true">·</span>
+      <span>{post.readTimeInMinutes} min read</span>
+      {post.tags.length > 0 && (
         <>
           <span aria-hidden="true">·</span>
           <span class="flex flex-wrap gap-1.5">
-            {post.data.tags.map((t) => <span>#{t}</span>)}
+            {post.tags.map((t) => <span>#{t.slug}</span>)}
           </span>
         </>
       )}
     </div>
   </Cell>
+
+  {post.coverImage && (
+    <Cell kind="output" count={null}>
+      <img
+        src={post.coverImage.url}
+        alt=""
+        class="not-prose w-full rounded-md border border-ink-200 dark:border-ink-800"
+        loading="eager"
+      />
+    </Cell>
+  )}
 
   <Cell kind="markdown" count={null}>
     <div
@@ -55,14 +70,20 @@ const date = post.data.pubDate.toISOString().slice(0, 10);
              prose-strong:text-ink-900 dark:prose-strong:text-ink-100
              prose-blockquote:border-l-blue-500 prose-blockquote:text-ink-600 dark:prose-blockquote:text-ink-400 prose-blockquote:not-italic
              prose-li:text-ink-800 dark:prose-li:text-ink-200
-             prose-img:rounded-md prose-img:border prose-img:border-ink-200 dark:prose-img:border-ink-800"
-    >
-      <Content />
-    </div>
+             prose-img:rounded-md prose-img:border prose-img:border-ink-200 dark:prose-img:border-ink-800
+             prose-pre:bg-ink-100/60 dark:prose-pre:bg-ink-900/60 prose-pre:border prose-pre:border-ink-200 dark:prose-pre:border-ink-800"
+      set:html={post.content.html}
+    />
   </Cell>
 
   <Cell kind="code" count={null}>
     <span class="text-ink-400"># end of notebook</span><br />
-    <span><a href="/blog/" class="text-blue-600 dark:text-blue-400 hover:underline">posts.next()</a> · <a href="/" class="text-blue-600 dark:text-blue-400 hover:underline">home()</a></span>
+    <span>
+      <a href="/blog/" class="text-blue-600 dark:text-blue-400 hover:underline">posts.next()</a>
+      {" · "}
+      <a href={hashnodeUrl} target="_blank" rel="noopener" class="text-blue-600 dark:text-blue-400 hover:underline">
+        discuss on hashnode
+      </a>
+    </span>
   </Cell>
 </Layout>
