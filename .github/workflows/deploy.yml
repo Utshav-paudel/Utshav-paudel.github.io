@@ -4,6 +4,13 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Repeats every 30 minutes — picks up new Hashnode posts automatically.
+  schedule:
+    - cron: "*/30 * * * *"
+  # External hook (e.g. Cloudflare Worker relaying a Hashnode webhook)
+  # can fire this for instant publish.
+  repository_dispatch:
+    types: [hashnode-publish]
 
 permissions:
   contents: read
