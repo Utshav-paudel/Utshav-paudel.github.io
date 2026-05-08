@@ -11,15 +11,15 @@ interface Props {
 
 const { domain, name, size = 44, class: className = "" } = Astro.props;
 
-// Google's faviconV2 endpoint is universal (works for any domain)
-// and returns a high-resolution icon when one is available.
-const logoUrl = `https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://${domain}`;
+// Google's faviconV2 endpoint is universal (works for any domain).
+// Request 256px for retina-clean rendering at our 44–48px display size.
+const logoUrl = `https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=256&url=https://${domain}`;
 const initial = name.charAt(0).toUpperCase();
 ---
 
 <span
   class:list={[
-    "logo-avatar relative shrink-0 inline-flex items-center justify-center rounded-md overflow-hidden bg-white dark:bg-ink-800 border border-ink-200 dark:border-ink-700",
+    "logo-avatar relative shrink-0 inline-flex items-center justify-center rounded-md overflow-hidden bg-white ring-1 ring-ink-200 dark:ring-ink-700",
     className,
   ]}
   style={`width:${size}px;height:${size}px;`}
@@ -30,11 +30,11 @@ const initial = name.charAt(0).toUpperCase();
     width={size}
     height={size}
     loading="lazy"
-    class="w-full h-full object-contain p-1"
+    class="w-full h-full object-cover"
     onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
   />
   <span
-    class="hidden absolute inset-0 items-center justify-center font-mono font-semibold text-ink-700 dark:text-ink-300 select-none"
+    class="hidden absolute inset-0 items-center justify-center font-mono font-semibold text-ink-700 select-none"
     aria-hidden="true"
   >
     {initial}
