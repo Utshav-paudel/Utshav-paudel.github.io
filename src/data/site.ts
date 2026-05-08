@@ -12,6 +12,14 @@ export const site = {
   linkedin: "utshav-paudel",
   avatarUrl: "https://github.com/Utshav-paudel.png",
   bio: "I build systems that learn. Currently fine-tuning LLMs for clinicians at MedForce AI's NHS pilot, where the goal is to make doctors 10x more efficient. Previously shipped computer-vision and agentic-AI products at Digital-Dandelion (London), and led NLP work at Omdena. Based in Kathmandu.",
+
+  /**
+   * Cloudflare Web Analytics beacon token.
+   * Get one at: https://dash.cloudflare.com/?to=/:account/web-analytics
+   * Add a site → Manual setup → copy the value of `data-cf-beacon` (a 32-char hex token).
+   * Paste it here. Leave empty string to disable analytics.
+   */
+  cloudflareAnalyticsToken: "",
 };
 
 export const nav = [

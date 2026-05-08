@@ -54,6 +54,15 @@ const canonical = new URL(Astro.url.pathname, site.url).toString();
         } catch (_) {}
       })();
     </script>
+
+    {site.cloudflareAnalyticsToken && (
+      <script
+        is:inline
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={`{"token": "${site.cloudflareAnalyticsToken}"}`}
+      />
+    )}
   </head>
   <body class="min-h-screen flex flex-col">
     <Toolbar filename={filename} />

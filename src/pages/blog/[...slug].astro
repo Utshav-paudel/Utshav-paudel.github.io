@@ -1,4 +1,5 @@
 ---
+import { codeToHtml } from "shiki";
 import Layout from "../../layouts/Layout.astro";
 import Cell from "../../components/Cell.astro";
 import { listPosts, type HashnodePost } from "../../lib/hashnode.ts";
@@ -16,6 +17,47 @@ type Props = { post: HashnodePost };
 const { post } = Astro.props;
 const date = post.publishedAt.slice(0, 10);
 const hashnodeUrl = `https://utshavpaudel.hashnode.dev/${post.slug}`;
+
+// Hashnode returns plain `<pre><code class="language-X">…</code></pre>` blocks.
+// Run them through Shiki for proper syntax highlighting consistent with the
+// rest of the site (matches astro.config.mjs themes).
+function decodeHtmlEntities(s: string): string {
+  return s
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&#x27;/g, "'");
+}
+
+async function highlightCodeBlocks(html: string): Promise<string> {
+  const matches = [...html.matchAll(/<pre><code class="language-(\w+)">([\s\S]*?)<\/code><\/pre>/g)];
+  if (matches.length === 0) return html;
+  type Patch = { start: number; end: number; html: string };
+  const patches: Patch[] = [];
+  for (const m of matches) {
+    const [full, lang, raw] = m;
+    if (m.index === undefined) continue;
+    try {
+      const highlighted = await codeToHtml(decodeHtmlEntities(raw), {
+        lang,
+        themes: { light: "github-light", dark: "github-dark" },
+        defaultColor: false,
+      });
+      patches.push({ start: m.index, end: m.index + full.length, html: highlighted });
+    } catch {
+      // Unsupported language, leave as-is
+    }
+  }
+  let result = html;
+  for (const p of patches.reverse()) {
+    result = result.slice(0, p.start) + p.html + result.slice(p.end);
+  }
+  return result;
+}
+
+const renderedHtml = await highlightCodeBlocks(post.content.html);
 ---
 
 <Layout
@@ -72,7 +114,7 @@ const hashnodeUrl = `https://utshavpaudel.hashnode.dev/${post.slug}`;
              prose-li:text-ink-800 dark:prose-li:text-ink-200
              prose-img:rounded-md prose-img:border prose-img:border-ink-200 dark:prose-img:border-ink-800
              prose-pre:bg-ink-100/60 dark:prose-pre:bg-ink-900/60 prose-pre:border prose-pre:border-ink-200 dark:prose-pre:border-ink-800"
-      set:html={post.content.html}
+      set:html={renderedHtml}
     />
   </Cell>
 
