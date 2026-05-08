@@ -48,6 +48,8 @@ export const skillGroups: SkillGroup[] = [
 
 export const education = {
   school: "Madan Bhandari Memorial College",
+  schoolUrl: "https://mbmc.edu.np/",
+  schoolDomain: "mbmc.edu.np",
   degree: "B.Sc. Computer Science & IT",
   location: "Kathmandu, Nepal",
   start: "Apr 2022",
