@@ -18,6 +18,13 @@ const fallbackFavicon = domain
   : null;
 const logoUrl = manualUrl ?? fallbackFavicon;
 const initial = name.charAt(0).toUpperCase();
+
+// Manual URLs are typically horizontal brand-wordmarks pulled from a site
+// header — they need padding + object-contain to render readably.
+// Favicons are square icons — they should fill the avatar with object-cover.
+const imgClass = manualUrl
+  ? "w-full h-full object-contain p-1"
+  : "w-full h-full object-cover";
 ---
 
 <span
@@ -36,7 +43,7 @@ const initial = name.charAt(0).toUpperCase();
           width={size}
           height={size}
           loading="lazy"
-          class="w-full h-full object-cover"
+          class={imgClass}
           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
         />
         <span

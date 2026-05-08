@@ -51,7 +51,7 @@ export const education = {
   schoolUrl: "https://mbmc.edu.np/",
   schoolDomain: "mbmc.edu.np",
   /** Optional override for the school logo. */
-  logoUrl: undefined as string | undefined,
+  logoUrl: "https://www.mbmc.edu.np/assets/site/img/mbmc.svg" as string | undefined,
   degree: "B.Sc. Computer Science & IT",
   location: "Kathmandu, Nepal",
   start: "Apr 2022",
