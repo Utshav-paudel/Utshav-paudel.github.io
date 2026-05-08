@@ -12,7 +12,7 @@ const { job } = Astro.props;
 
 <article class="not-prose group relative rounded-lg border border-ink-200 dark:border-ink-800 p-4 sm:p-6 hover:border-ink-300 dark:hover:border-ink-700 transition-colors">
   <header class="flex items-start gap-3 sm:gap-4">
-    <LogoAvatar domain={job.companyDomain} name={job.company} size={44} />
+    <LogoAvatar domain={job.companyDomain} logoUrl={job.logoUrl} name={job.company} size={44} />
 
     <div class="min-w-0 flex-1">
       <div class="flex items-start justify-between gap-2 flex-wrap">
@@ -32,14 +32,18 @@ const { job } = Astro.props;
         </time>
       </div>
       <div class="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-sm text-ink-600 dark:text-ink-400">
-        <a
-          href={job.companyUrl}
-          target="_blank"
-          rel="noopener"
-          class="font-medium text-blue-700 dark:text-blue-400 hover:underline decoration-dotted underline-offset-2"
-        >
-          {job.company}
-        </a>
+        {job.companyUrl ? (
+          <a
+            href={job.companyUrl}
+            target="_blank"
+            rel="noopener"
+            class="font-medium text-blue-700 dark:text-blue-400 hover:underline decoration-dotted underline-offset-2"
+          >
+            {job.company}
+          </a>
+        ) : (
+          <span class="font-medium text-ink-800 dark:text-ink-200">{job.company}</span>
+        )}
         <span class="text-ink-300 dark:text-ink-700" aria-hidden="true">·</span>
         <span class="inline-flex items-center gap-1">
           <Icon name="map-pin" size={12} class="text-ink-400" />

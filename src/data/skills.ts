@@ -50,8 +50,10 @@ export const education = {
   school: "Madan Bhandari Memorial College",
   schoolUrl: "https://mbmc.edu.np/",
   schoolDomain: "mbmc.edu.np",
+  /** Optional override for the school logo. */
+  logoUrl: undefined as string | undefined,
   degree: "B.Sc. Computer Science & IT",
   location: "Kathmandu, Nepal",
   start: "Apr 2022",
-  end: "Apr 2026 (expected)",
+  end: "Apr 2026",
 };

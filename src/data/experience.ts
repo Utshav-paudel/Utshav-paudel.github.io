@@ -1,10 +1,15 @@
 export type Experience = {
   role: string;
   company: string;
-  /** Company website URL (used for the link, and to derive the logo). */
-  companyUrl: string;
-  /** Domain only, used for Clearbit logo. */
-  companyDomain: string;
+  /** Company website URL. If absent, the company name is plain text (no link). */
+  companyUrl?: string;
+  /** Domain, used to derive the company favicon when logoUrl is absent. */
+  companyDomain?: string;
+  /**
+   * Manual logo URL override. Use this when the auto-derived favicon looks bad.
+   * Right-click the company logo on LinkedIn → "Copy image URL".
+   */
+  logoUrl?: string;
   location: string;
   start: string;
   end: string;
@@ -59,8 +64,6 @@ export const experience: Experience[] = [
   {
     role: "Data Science Intern",
     company: "The Sparks Foundation",
-    companyUrl: "https://www.thesparksfoundationsingapore.org/",
-    companyDomain: "thesparksfoundationsingapore.org",
     location: "Remote",
     start: "Jun 2023",
     end: "Jul 2023",
