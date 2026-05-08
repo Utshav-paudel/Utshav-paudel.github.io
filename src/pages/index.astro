@@ -47,11 +47,12 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft))
             Get in touch
           </a>
           <a
-            href="/cv/"
+            href="/cv.pdf"
+            download="utshav-paudel-cv.pdf"
             class="inline-flex items-center gap-2 px-3.5 py-2 rounded-md border border-ink-300 dark:border-ink-700 text-sm font-medium hover:border-ink-500 dark:hover:border-ink-400 transition-colors"
           >
-            <Icon name="file-text" size={15} />
-            View CV
+            <Icon name="download" size={15} />
+            Download CV
           </a>
           <a
             href={`https://github.com/${site.github}`}
