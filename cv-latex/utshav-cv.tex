@@ -1,0 +1,140 @@
+% Utshav Paudel — CV (Overleaf-ready, pdfLaTeX)
+% Format modeled on the prior CV layout. Single column, A4.
+% No em dashes anywhere in body text. En dashes only in date / number ranges.
+
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=0.75in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+\definecolor{ink}{HTML}{1a1a1a}
+\definecolor{accent}{HTML}{1f4ec5}
+\definecolor{muted}{HTML}{555555}
+
+\hypersetup{colorlinks=true, urlcolor=accent, linkcolor=accent}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\color{ink}
+
+% Section heading: muted, hairline rule across the page just below the text.
+\titleformat{\section}
+  {\fontsize{13}{15}\selectfont\color{muted}}
+  {}{0pt}{}[\vspace{1pt}{\color{muted}\titlerule}\vspace{2pt}]
+\titlespacing*{\section}{0pt}{12pt}{1pt}
+
+% Role block. Two lines:
+%   bold Company .................... Location
+%   italic Role  .................... italic Dates
+\newcommand{\role}[4]{%
+  \noindent\textbf{#1}\hfill #2\\[1pt]
+  \textit{#3}\hfill \textit{#4}\par
+  \vspace{2pt}
+}
+
+\newenvironment{bullets}{%
+  \vspace{-2pt}
+  \begin{itemize}[leftmargin=14pt, itemsep=1pt, topsep=2pt, label={\textbullet}]
+}{\end{itemize}\vspace{3pt}}
+
+\newcommand{\project}[2]{%
+  \noindent\textbf{#1} \textbar{} \textit{#2}\par\vspace{1pt}
+}
+
+\begin{document}
+
+% =========================================================
+% Header
+% =========================================================
+\begin{center}
+  {\fontsize{22}{26}\selectfont\bfseries Utshav Paudel\par}
+  \vspace{3pt}
+  {\color{muted}\small AI Engineer specializing in production LLM systems for clinical and healthcare use cases.\par}
+  \vspace{4pt}
+  Kathmandu, Nepal\par
+  \vspace{2pt}
+  \href{mailto:utshav.paudel466@gmail.com}{utshav.paudel466@gmail.com} \textbar{}
+  \href{https://linkedin.com/in/utshav-paudel}{LinkedIn: utshav-paudel} \textbar{}
+  \href{https://github.com/Utshav-paudel}{github.com/Utshav-paudel} \textbar{}
+  \href{https://huggingface.co/Utshav}{huggingface.co/Utshav}
+\end{center}
+
+% =========================================================
+% Education
+% =========================================================
+\section*{Education}
+\role{Madan Bhandari Memorial College}{Kathmandu, Nepal}%
+     {Bachelor of Science in Computer Science \& Information Technology}{Apr. 2022 -- Apr. 2026}
+
+% =========================================================
+% Experience
+% =========================================================
+\section*{Experience}
+
+\role{MedForce AI}{London, UK (Remote)}{AI Engineer}{Jun. 2025 -- Present}
+\begin{bullets}
+  \item AI engineer on a clinical-automation platform deployed in an NHS pilot. Designed the agent architecture and clinical RAG pipeline targeting clinician documentation and decision-support workflows.
+  \item Fine-tuned domain-specific LLMs (Mistral 8$\times$22B, Llama~3, Command~R family) on curated hepatology cases for medical reasoning and structured documentation; built clinical evaluation harnesses covering factuality, citation grounding, and hallucination rate.
+  \item Cut inference cost and latency for real-time clinical use through various caching techniques (KV cache, prompt caching, semantic response cache), request batching, and quantization; built monitoring for latency, drift, and hallucination signals.
+\end{bullets}
+
+\role{Digital-Dandelion}{London, UK (Remote)}{AI Engineer}{Feb. 2024 -- Jun. 2025}
+\begin{bullets}
+  \item Built a clinical RAG system over EASL liver-disease guidelines using a multi-route retrieval architecture: simple queries served by embedding-based retrieval, complex queries routed to page-indexed advanced RAG. Reached 97\% answer accuracy vs.\ 85\% on a state-of-the-art baseline and cut end-to-end latency by 50\%.
+  \item Trained an EfficientNet image-classification system on GCP scoring 30{,}000+ dental websites for modernization; lifted accuracy from 89\% to 95\% via targeted data augmentation and an architecture switch from the prior baseline. Released the dental scraping and extraction datasets on Hugging Face.
+  \item Built a multimodal ranking system for JLL evaluating hundreds of commercial real-estate offices via pairwise tournament comparisons across building exterior, interior, workspace, and floor-plan imagery to identify top performers.
+  \item Fine-tuned an LLM on hundreds of past winning creative campaigns and creative-director rubrics for Page \& Page (Novo Nordisk account); validated outputs on KPIs spanning relevance, creativity, and brand-fit.
+\end{bullets}
+
+\role{Omdena}{New York, USA (Remote)}{Junior Machine Learning Engineer}{Jul. 2023 -- Sep. 2023}
+\begin{bullets}
+  \item Coordinated a 10--20-person distributed team across multiple timezones building scraping infrastructure that assembled a 46{,}000-article Nepali news corpus, the working dataset for the program's media-representation research.
+  \item Built Nepali-language NLP models capturing local idioms to classify how women and marginalized groups are represented in Nepali news media.
+  \item Designed a media-diversity scoring model with explicit progress metrics surfaced to research stakeholders.
+\end{bullets}
+
+% =========================================================
+% Projects
+% =========================================================
+\section*{Projects}
+
+\project{MeroDaktar (AI-Powered Medical Platform)}{MedGemma 4B, Gemma-3, Voice AI, FastAPI}
+\begin{bullets}
+  \item Voice-driven patient interviews in Nepali producing preliminary diagnostic reports and appointment booking.
+  \item Fine-tuned a custom MedGemma-Nepali multimodal model (4B, Gemma-3 family) for Nepali clinical image-text reasoning; released fp16, 16-bit, and 4-bit variants on Hugging Face.
+  \item FastAPI backend handling AI inference and health-record flow with input validation.
+\end{bullets}
+
+\project{Llama-3-70B Extractor}{Llama 3 70B, Information Extraction}
+\begin{bullets}
+  \item Fine-tuned Llama-3-70B-Instruct for structured information extraction from web content; released full-weights, adapter, and 4-bit variants.
+  \item Trained alongside two open Hugging Face datasets (Dental\_website\_scraping, Dentalweb\_extraction) used as the source corpus.
+\end{bullets}
+
+% =========================================================
+% Technical Skills
+% =========================================================
+\section*{Technical Skills}
+\textbf{Languages}: Python, TypeScript, SQL, C++\\
+\textbf{AI/ML}: LLMs, RAG, LangChain, NLP, Computer Vision, Fine-tuning\\
+\textbf{Cloud \& DevOps}: Google Cloud Platform (GCP), Docker, Git, MLOps\\
+\textbf{Frameworks}: PyTorch, TensorFlow, Scikit-learn, Pandas, NumPy, FastAPI
+
+% =========================================================
+% Open Models & Datasets
+% =========================================================
+\section*{Open Models \& Datasets}
+\textbf{Hugging Face}: \href{https://huggingface.co/Utshav}{huggingface.co/Utshav}. Released models include the \textbf{MedGemma-Nepali} series (medical multimodal, low-resource clinical language) and the \textbf{Llama-3-70B Extractor} (structured information extraction). Open datasets: \textbf{Dental\_website\_scraping} and \textbf{Dentalweb\_extraction} from the Digital-Dandelion work.
+
+% =========================================================
+% Selected Writing
+% =========================================================
+\section*{Selected Writing}
+\href{https://utshavpaudel.com.np/blog/your-rag-is-probably-worse-than-you-think-three-ways-to-find-out/}{Your RAG is Probably Worse Than You Think: Three Ways to Find Out} \textbar{} \textit{utshavpaudel.com.np/blog}
+
+\end{document}

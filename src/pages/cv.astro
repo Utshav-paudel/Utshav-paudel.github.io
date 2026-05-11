@@ -5,8 +5,23 @@ import { site } from "../data/site.ts";
 import { experience } from "../data/experience.ts";
 import { projects } from "../data/projects.ts";
 import { skillGroups, education } from "../data/skills.ts";
+import { listPosts } from "../lib/hashnode.ts";
 
 const canonical = new URL("/cv/", site.url).toString();
+
+// Pull up to 3 most recent Hashnode posts for the "Selected Writing" section.
+// If the Hashnode fetch fails at build time, gracefully render an empty list.
+let writing: { title: string; url: string; publishedAt: string }[] = [];
+try {
+  const posts = await listPosts(3);
+  writing = posts.slice(0, 3).map((p) => ({
+    title: p.title,
+    url: new URL(`/blog/${p.slug}/`, site.url).toString(),
+    publishedAt: p.publishedAt,
+  }));
+} catch {
+  writing = [];
+}
 ---
 
 <!doctype html>
@@ -79,6 +94,12 @@ const canonical = new URL("/cv/", site.url).toString();
       .project h3 { font-size: 0.98rem; font-weight: 600; margin: 0 0 0.15rem; }
       .project .stack { font-family: "JetBrains Mono", monospace; font-size: 0.78rem; color: #78716c; margin-bottom: 0.35rem; }
       .project p { font-size: 0.93rem; color: #44403c; margin: 0; line-height: 1.55; }
+      ul.writing { list-style: none; padding: 0; margin: 0; }
+      ul.writing li { font-size: 0.93rem; color: #44403c; line-height: 1.55; margin-bottom: 0.35rem; display: grid; grid-template-columns: 1fr auto; gap: 0.5rem 1rem; }
+      ul.writing a { color: #2563eb; text-decoration: none; }
+      ul.writing a:hover { text-decoration: underline; }
+      ul.writing time { font-family: "JetBrains Mono", monospace; font-size: 0.78rem; color: #57534e; white-space: nowrap; }
+      .placeholder { font-size: 0.9rem; color: #78716c; font-style: italic; }
 
       @media print {
         body { background: white; }
@@ -110,7 +131,7 @@ const canonical = new URL("/cv/", site.url).toString();
 
     <article class="cv-page">
       <h1>{site.name}</h1>
-      <p class="subtitle">AI Engineer</p>
+      <p class="subtitle">{site.headline}</p>
       <div class="meta">
         <span>📍 {site.location}</span>
         <a href={`mailto:${site.email}`}>{site.email}</a>
@@ -167,6 +188,23 @@ const canonical = new URL("/cv/", site.url).toString();
           </div>
         ))
       }
+
+      <h2>Selected Writing</h2>
+      {writing.length > 0 ? (
+        <ul class="writing">
+          {writing.map((w) => (
+            <li>
+              <a href={w.url}>{w.title}</a>
+              <time>{w.publishedAt.slice(0, 10)}</time>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="placeholder">See <a href="/blog/" style="color:#2563eb;text-decoration:none">utshavpaudel.com.np/blog</a> for recent posts.</p>
+      )}
+
+      <h2>Open Source / Talks</h2>
+      <p class="placeholder">Forthcoming — signature open-source project on clinical LLM evaluation in development. Updates at <a href={`https://github.com/${site.github}`} style="color:#2563eb;text-decoration:none">github.com/{site.github}</a>.</p>
     </article>
   </body>
 </html>
