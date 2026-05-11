@@ -19,12 +19,13 @@ export default {
           "system-ui",
           "sans-serif",
         ],
-        // Instrument Serif for editorial accents (hero name, large headings).
-        // Italic at display sizes gives the page real personality without
-        // making the technical content feel out of place.
-        display: ["Instrument Serif", "Lora", "Georgia", "serif"],
+        // Newsreader is an editorial screen-serif (variable, optical
+        // sizing). Used for the experience/project card body so the
+        // long-form bullets read like a magazine column instead of a
+        // sans-serif data dump.
+        editorial: ["Newsreader", "Lora", "Georgia", "serif"],
         mono: ["Geist Mono", "JetBrains Mono", "ui-monospace", "SF Mono", "Menlo", "monospace"],
-        serif: ["Lora", "Georgia", "serif"],
+        serif: ["Newsreader", "Lora", "Georgia", "serif"],
       },
       colors: {
         ink: {
@@ -43,6 +44,22 @@ export default {
         accent: {
           light: "#2563eb",
           dark: "#60a5fa",
+        },
+        // Warm card backgrounds. parchment.* in light mode (cream/beige),
+        // ember.* in dark mode (warm near-black). Used by ExperienceCard
+        // and ProjectCard to set the "out box" aesthetic apart from the
+        // surrounding white page.
+        parchment: {
+          50: "#fbf6ea",
+          100: "#f7efdc",
+          200: "#ede2c4",
+          border: "#e8dcc1",
+        },
+        ember: {
+          900: "#1f1c17",
+          800: "#26221c",
+          700: "#2d2922",
+          border: "#3a3528",
         },
       },
       typography: {
