@@ -22,7 +22,7 @@ const counterText =
 
 const containerClass = [
   "cell group relative flex gap-3 sm:gap-5 px-4 sm:px-6 py-4",
-  attached ? "" : "border-t border-ink-200 dark:border-ink-800",
+  attached ? "" : "border-t border-parchment-border/60 dark:border-ember-border/60",
 ].join(" ");
 
 const counterClass = [
@@ -38,7 +38,7 @@ const bodyClass =
   kind === "markdown"
     ? "min-w-0 flex-1 font-sans leading-relaxed"
     : kind === "code"
-      ? "min-w-0 flex-1 font-mono text-sm leading-relaxed bg-ink-100/60 dark:bg-ink-900/60 rounded-md border border-ink-200 dark:border-ink-800 px-4 py-3 overflow-x-auto"
+      ? "min-w-0 flex-1 font-mono text-sm leading-relaxed bg-parchment-50/70 dark:bg-ember-800/60 rounded-md border border-parchment-border/70 dark:border-ember-border/70 px-4 py-3 overflow-x-auto"
       : // Output: default to sans so rich content (cards, lists, prose) reads
         // well. Individual outputs that want the raw "stdout" look (e.g. the
         // empty-state stub) can add `font-mono` themselves.

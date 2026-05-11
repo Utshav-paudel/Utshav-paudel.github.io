@@ -17,11 +17,11 @@
   }
 
   body {
-    @apply bg-ink-50 text-ink-900 font-sans;
+    @apply bg-parchment-25 text-ink-900 font-sans;
   }
 
   .dark body {
-    @apply bg-ink-950 text-ink-100;
+    @apply bg-ember-950 text-ink-100;
   }
 
   /* Subtle grid background, like a real notebook */

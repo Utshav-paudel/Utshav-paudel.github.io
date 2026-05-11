@@ -50,12 +50,20 @@ export default {
         // and ProjectCard to set the "out box" aesthetic apart from the
         // surrounding white page.
         parchment: {
+          // 25 = page/article background (very pale cream, replaces white).
+          // 50 = card background (cream, current).
+          // 100/200 = deeper accents.
+          25: "#fdfaf1",
           50: "#fbf6ea",
           100: "#f7efdc",
           200: "#ede2c4",
           border: "#e8dcc1",
         },
         ember: {
+          // 950 = page/article background in dark mode (warm darkest).
+          // 900 = card background in dark mode (warm dark, slightly lighter
+          //       than 950 so cards still 'pop').
+          950: "#16140f",
           900: "#1f1c17",
           800: "#26221c",
           700: "#2d2922",
