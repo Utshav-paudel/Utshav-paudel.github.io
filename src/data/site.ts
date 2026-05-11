@@ -16,7 +16,7 @@ export const site = {
   github: "Utshav-paudel",
   linkedin: "utshav-paudel",
   avatarUrl: "https://github.com/Utshav-paudel.png",
-  bio: "AI Engineer building production LLM systems for clinical workflows. Currently lead AI engineer at MedForce AI, working on an NHS pilot for clinical automation — agent architecture, clinical RAG, and domain-tuned models for hepatology. Focused on evaluation and reliability of medical AI. Previously shipped computer-vision and agentic-AI products at Digital-Dandelion (London) and led NLP work at Omdena. Based in Kathmandu.",
+  bio: "AI Engineer building production LLM systems for clinical workflows. Currently at MedForce AI, working on an NHS pilot for clinical automation: agent architecture, clinical RAG, and domain-tuned models for hepatology. Focused on evaluation and reliability of medical AI. Previously shipped computer-vision and agentic-AI products at Digital-Dandelion (London) and led NLP work at Omdena. Based in Kathmandu.",
 
   /**
    * Cloudflare Web Analytics beacon token.

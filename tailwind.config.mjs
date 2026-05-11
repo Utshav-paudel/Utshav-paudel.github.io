@@ -7,21 +7,23 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        // Native UI stack first: SF Pro on iOS/macOS, Segoe UI on Windows,
-        // Roboto on Android. Renders sharper at small sizes than Inter and
-        // skips the Google Fonts request on mobile.
+        // Geist (Vercel's house sans) for body. Modern, sharp at all sizes,
+        // designed for technical interfaces. System fonts as fallback during
+        // the brief moment before Geist loads.
         sans: [
+          "Geist",
           "-apple-system",
           "BlinkMacSystemFont",
-          "Inter",
           "Segoe UI",
           "Roboto",
-          "Helvetica Neue",
-          "Arial",
           "system-ui",
           "sans-serif",
         ],
-        mono: ["JetBrains Mono", "ui-monospace", "SF Mono", "Menlo", "monospace"],
+        // Instrument Serif for editorial accents (hero name, large headings).
+        // Italic at display sizes gives the page real personality without
+        // making the technical content feel out of place.
+        display: ["Instrument Serif", "Lora", "Georgia", "serif"],
+        mono: ["Geist Mono", "JetBrains Mono", "ui-monospace", "SF Mono", "Menlo", "monospace"],
         serif: ["Lora", "Georgia", "serif"],
       },
       colors: {

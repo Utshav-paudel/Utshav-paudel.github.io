@@ -17,7 +17,7 @@ export const projects: Project[] = [
   {
     name: "MeroDaktar",
     tagline:
-      "AI medical consultation platform for Nepali patients — voice-driven patient interviews powered by a custom MedGemma-Nepali multimodal model.",
+      "AI medical consultation platform for Nepali patients. Voice-driven patient interviews powered by a custom MedGemma-Nepali multimodal model.",
     stack: ["MedGemma 4B", "Gemma-3", "Voice AI", "FastAPI"],
     highlights: [
       "Fine-tuned MedGemma (4B, Gemma-3 family) for Nepali-language clinical image-text reasoning; released fp16, 16-bit, and 4-bit variants on Hugging Face.",
