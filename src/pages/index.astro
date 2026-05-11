@@ -142,12 +142,12 @@ const posts = (await listPosts(3)).slice(0, 3);
     {posts.length === 0 ? (
       <p class="text-ink-500 italic font-mono text-sm">[]  # warming up the kernel...</p>
     ) : (
-      <ul class="not-prose space-y-2 -my-2">
+      <ul class="not-prose space-y-3">
         {posts.map((post) => (
           <li>
             <a
               href={`/blog/${post.slug}/`}
-              class="group block rounded-md py-2 px-2 -mx-2 hover:bg-ink-50 dark:hover:bg-ink-800/30 transition-colors"
+              class="group block rounded-lg border border-parchment-border dark:border-ember-border bg-parchment-50 dark:bg-ember-900 p-4 hover:border-parchment-200 dark:hover:border-ember-700 transition-colors"
             >
               <div class="flex items-baseline justify-between gap-3">
                 <h3 class="font-sans text-base font-medium text-ink-900 dark:text-ink-100 group-hover:underline decoration-dotted">
@@ -157,7 +157,7 @@ const posts = (await listPosts(3)).slice(0, 3);
                   {post.publishedAt.slice(0, 10)}
                 </time>
               </div>
-              <p class="text-sm text-ink-600 dark:text-ink-400 mt-0.5 line-clamp-2">{post.brief}</p>
+              <p class="font-editorial text-[15.5px] leading-[1.55] text-ink-700 dark:text-ink-300 mt-1.5 line-clamp-2">{post.brief}</p>
             </a>
           </li>
         ))}

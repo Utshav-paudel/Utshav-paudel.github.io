@@ -40,12 +40,12 @@ const allTags = [
     {posts.length === 0 ? (
       <div class="text-ink-500 italic font-mono text-sm">[]  # no posts yet</div>
     ) : (
-      <ul class="not-prose divide-y divide-ink-200 dark:divide-ink-800 -my-3">
+      <ul class="not-prose space-y-3">
         {posts.map((post) => (
           <li>
             <a
               href={`/blog/${post.slug}/`}
-              class="group block py-4 hover:bg-ink-50 dark:hover:bg-ink-800/30 -mx-2 px-2 rounded transition-colors"
+              class="group block rounded-lg border border-parchment-border dark:border-ember-border bg-parchment-50 dark:bg-ember-900 p-4 sm:p-5 hover:border-parchment-200 dark:hover:border-ember-700 transition-colors"
             >
               <div class="flex items-baseline justify-between gap-3">
                 <h2 class="font-sans text-lg font-medium text-ink-900 dark:text-ink-100 group-hover:underline decoration-dotted">
@@ -55,8 +55,8 @@ const allTags = [
                   {post.publishedAt.slice(0, 10)}
                 </time>
               </div>
-              <p class="text-sm text-ink-600 dark:text-ink-400 mt-1 leading-relaxed">{post.brief}</p>
-              <div class="mt-2 flex flex-wrap items-center gap-2 text-xs text-ink-500">
+              <p class="font-editorial text-[16px] text-ink-700 dark:text-ink-300 mt-1.5 leading-[1.55]">{post.brief}</p>
+              <div class="mt-3 flex flex-wrap items-center gap-2 text-xs text-ink-500">
                 <span class="font-mono">{post.readTimeInMinutes} min read</span>
                 {post.tags.length > 0 && (
                   <>
