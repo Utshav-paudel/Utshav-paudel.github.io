@@ -10,7 +10,7 @@ interface Props {
 const { job } = Astro.props;
 ---
 
-<article class="not-prose group relative rounded-lg border border-ink-200 dark:border-ink-800 p-4 sm:p-6 hover:border-ink-300 dark:hover:border-ink-700 transition-colors">
+<article class="not-prose font-sans group relative rounded-lg border border-ink-200 dark:border-ink-800 p-4 sm:p-6 hover:border-ink-300 dark:hover:border-ink-700 transition-colors">
   <header class="flex items-start gap-3 sm:gap-4">
     <LogoAvatar domain={job.companyDomain} logoUrl={job.logoUrl} bgClass={job.logoBg} name={job.company} size={44} />
 

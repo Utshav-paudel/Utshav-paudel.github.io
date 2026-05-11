@@ -39,7 +39,10 @@ const bodyClass =
     ? "min-w-0 flex-1 font-sans leading-relaxed"
     : kind === "code"
       ? "min-w-0 flex-1 font-mono text-sm leading-relaxed bg-ink-100/60 dark:bg-ink-900/60 rounded-md border border-ink-200 dark:border-ink-800 px-4 py-3 overflow-x-auto"
-      : "min-w-0 flex-1 font-mono text-sm leading-relaxed text-ink-700 dark:text-ink-300";
+      : // Output: default to sans so rich content (cards, lists, prose) reads
+        // well. Individual outputs that want the raw "stdout" look (e.g. the
+        // empty-state stub) can add `font-mono` themselves.
+        "min-w-0 flex-1 font-sans text-[15px] leading-relaxed text-ink-700 dark:text-ink-300";
 ---
 
 <div class={containerClass} data-cell-kind={kind}>
