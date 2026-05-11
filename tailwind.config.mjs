@@ -7,8 +7,21 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        mono: ["JetBrains Mono", "ui-monospace", "monospace"],
+        // Native UI stack first: SF Pro on iOS/macOS, Segoe UI on Windows,
+        // Roboto on Android. Renders sharper at small sizes than Inter and
+        // skips the Google Fonts request on mobile.
+        sans: [
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Inter",
+          "Segoe UI",
+          "Roboto",
+          "Helvetica Neue",
+          "Arial",
+          "system-ui",
+          "sans-serif",
+        ],
+        mono: ["JetBrains Mono", "ui-monospace", "SF Mono", "Menlo", "monospace"],
         serif: ["Lora", "Georgia", "serif"],
       },
       colors: {
