@@ -5,19 +5,18 @@ import { site } from "../data/site.ts";
 import { experience } from "../data/experience.ts";
 import { projects } from "../data/projects.ts";
 import { skillGroups, education } from "../data/skills.ts";
-import { listPosts } from "../lib/hashnode.ts";
+import { listPosts } from "../lib/blog.ts";
 
 const canonical = new URL("/cv/", site.url).toString();
 
-// Pull up to 3 most recent Hashnode posts for the "Selected Writing" section.
-// If the Hashnode fetch fails at build time, gracefully render an empty list.
+// Pull up to 3 most recent blog posts for the "Selected Writing" section.
 let writing: { title: string; url: string; publishedAt: string }[] = [];
 try {
   const posts = await listPosts(3);
-  writing = posts.slice(0, 3).map((p) => ({
+  writing = posts.map((p) => ({
     title: p.title,
     url: new URL(`/blog/${p.slug}/`, site.url).toString(),
-    publishedAt: p.publishedAt,
+    publishedAt: p.date,
   }));
 } catch {
   writing = [];

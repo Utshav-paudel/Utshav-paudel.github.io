@@ -1,5 +1,5 @@
 import rss from "@astrojs/rss";
-import { listPosts } from "../lib/hashnode.ts";
+import { listPosts } from "../lib/blog.ts";
 import { site } from "../data/site.ts";
 import type { APIContext } from "astro";
 
@@ -12,9 +12,9 @@ export async function GET(context: APIContext) {
     items: posts.map((post) => ({
       title: post.title,
       description: post.brief,
-      pubDate: new Date(post.publishedAt),
+      pubDate: post.publishedAt,
       link: `/blog/${post.slug}/`,
-      categories: post.tags.map((t) => t.slug),
+      categories: post.tags,
     })),
   });
 }

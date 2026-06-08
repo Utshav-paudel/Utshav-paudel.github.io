@@ -1,63 +1,22 @@
 ---
-import { codeToHtml } from "shiki";
 import Layout from "../../layouts/Layout.astro";
 import Cell from "../../components/Cell.astro";
-import { listPosts, type HashnodePost } from "../../lib/hashnode.ts";
+import { listEntries, toMeta } from "../../lib/blog.ts";
 import { site } from "../../data/site.ts";
 
 export async function getStaticPaths() {
-  const posts = await listPosts();
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: { post },
+  const entries = await listEntries();
+  return entries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
   }));
 }
 
-type Props = { post: HashnodePost };
-const { post } = Astro.props;
-const date = post.publishedAt.slice(0, 10);
-const hashnodeUrl = `https://utshavpaudel.hashnode.dev/${post.slug}`;
-
-// Hashnode returns plain `<pre><code class="language-X">…</code></pre>` blocks.
-// Run them through Shiki for proper syntax highlighting consistent with the
-// rest of the site (matches astro.config.mjs themes).
-function decodeHtmlEntities(s: string): string {
-  return s
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/&#x27;/g, "'");
-}
-
-async function highlightCodeBlocks(html: string): Promise<string> {
-  const matches = [...html.matchAll(/<pre><code class="language-(\w+)">([\s\S]*?)<\/code><\/pre>/g)];
-  if (matches.length === 0) return html;
-  type Patch = { start: number; end: number; html: string };
-  const patches: Patch[] = [];
-  for (const m of matches) {
-    const [full, lang, raw] = m;
-    if (m.index === undefined) continue;
-    try {
-      const highlighted = await codeToHtml(decodeHtmlEntities(raw), {
-        lang,
-        themes: { light: "github-light", dark: "github-dark" },
-        defaultColor: false,
-      });
-      patches.push({ start: m.index, end: m.index + full.length, html: highlighted });
-    } catch {
-      // Unsupported language, leave as-is
-    }
-  }
-  let result = html;
-  for (const p of patches.reverse()) {
-    result = result.slice(0, p.start) + p.html + result.slice(p.end);
-  }
-  return result;
-}
-
-const renderedHtml = await highlightCodeBlocks(post.content.html);
+const { entry } = Astro.props;
+const post = toMeta(entry);
+// Astro renders the MDX body and highlights code blocks with the Shiki themes
+// configured in astro.config.mjs (github-light / github-dark).
+const { Content } = await entry.render();
 ---
 
 <Layout
@@ -76,14 +35,14 @@ const renderedHtml = await highlightCodeBlocks(post.content.html);
       <p class="mt-3 font-editorial text-ink-700 dark:text-ink-300 text-[17px] sm:text-[18px] leading-[1.55]">{post.brief}</p>
     )}
     <div class="mt-4 flex flex-wrap items-center gap-3 font-mono text-xs text-ink-500">
-      <time datetime={post.publishedAt}>{date}</time>
+      <time datetime={post.isoDate}>{post.date}</time>
       <span aria-hidden="true">·</span>
       <span>{post.readTimeInMinutes} min read</span>
       {post.tags.length > 0 && (
         <>
           <span aria-hidden="true">·</span>
           <span class="flex flex-wrap gap-1.5">
-            {post.tags.map((t) => <span>#{t.slug}</span>)}
+            {post.tags.map((t) => <span>#{t}</span>)}
           </span>
         </>
       )}
@@ -93,7 +52,7 @@ const renderedHtml = await highlightCodeBlocks(post.content.html);
   {post.coverImage && (
     <Cell kind="output" count={null}>
       <img
-        src={post.coverImage.url}
+        src={post.coverImage}
         alt=""
         class="not-prose w-full rounded-md border border-ink-200 dark:border-ink-800"
         loading="eager"
@@ -115,18 +74,15 @@ const renderedHtml = await highlightCodeBlocks(post.content.html);
              prose-img:rounded-md prose-img:border prose-img:border-parchment-border dark:prose-img:border-ember-border
              prose-pre:bg-parchment-50 dark:prose-pre:bg-ember-900 prose-pre:border prose-pre:border-parchment-border dark:prose-pre:border-ember-border
              prose-code:font-mono prose-code:before:content-none prose-code:after:content-none"
-      set:html={renderedHtml}
-    />
+    >
+      <Content />
+    </div>
   </Cell>
 
   <Cell kind="code" count={null}>
     <span class="text-ink-400"># end of notebook</span><br />
     <span>
       <a href="/blog/" class="text-blue-600 dark:text-blue-400 hover:underline">posts.next()</a>
-      {" · "}
-      <a href={hashnodeUrl} target="_blank" rel="noopener" class="text-blue-600 dark:text-blue-400 hover:underline">
-        discuss on hashnode
-      </a>
     </span>
   </Cell>
 </Layout>

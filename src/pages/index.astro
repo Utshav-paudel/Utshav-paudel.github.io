@@ -7,9 +7,9 @@ import ProjectCard from "../components/ProjectCard.astro";
 import { site } from "../data/site.ts";
 import { experience } from "../data/experience.ts";
 import { projects } from "../data/projects.ts";
-import { listPosts } from "../lib/hashnode.ts";
+import { listPosts } from "../lib/blog.ts";
 
-const posts = (await listPosts(3)).slice(0, 3);
+const posts = await listPosts(3);
 ---
 
 <Layout filename="home.ipynb">
@@ -153,8 +153,8 @@ const posts = (await listPosts(3)).slice(0, 3);
                 <h3 class="font-sans text-base font-medium text-ink-900 dark:text-ink-100 group-hover:underline decoration-dotted">
                   {post.title}
                 </h3>
-                <time class="font-mono text-xs text-ink-500 shrink-0" datetime={post.publishedAt}>
-                  {post.publishedAt.slice(0, 10)}
+                <time class="font-mono text-xs text-ink-500 shrink-0" datetime={post.isoDate}>
+                  {post.date}
                 </time>
               </div>
               <p class="font-editorial text-[15.5px] leading-[1.55] text-ink-700 dark:text-ink-300 mt-1.5 line-clamp-2">{post.brief}</p>

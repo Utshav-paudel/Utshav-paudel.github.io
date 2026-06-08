@@ -2,15 +2,13 @@
 import Layout from "../../layouts/Layout.astro";
 import Cell from "../../components/Cell.astro";
 import Icon from "../../components/Icon.astro";
-import { listPosts } from "../../lib/hashnode.ts";
+import { listPosts } from "../../lib/blog.ts";
 import { site } from "../../data/site.ts";
 
 const posts = await listPosts();
-const allTags = [
-  ...new Map(
-    posts.flatMap((p) => p.tags.map((t) => [t.slug, t])),
-  ).values(),
-].sort((a, b) => a.name.localeCompare(b.name));
+const allTags = [...new Set(posts.flatMap((p) => p.tags))].sort((a, b) =>
+  a.localeCompare(b),
+);
 ---
 
 <Layout filename="blog.ipynb" title={`Blog · ${site.name}`}>
@@ -51,8 +49,8 @@ const allTags = [
                 <h2 class="font-sans text-lg font-medium text-ink-900 dark:text-ink-100 group-hover:underline decoration-dotted">
                   {post.title}
                 </h2>
-                <time class="font-mono text-xs text-ink-500 shrink-0" datetime={post.publishedAt}>
-                  {post.publishedAt.slice(0, 10)}
+                <time class="font-mono text-xs text-ink-500 shrink-0" datetime={post.isoDate}>
+                  {post.date}
                 </time>
               </div>
               <p class="font-editorial text-[16px] text-ink-700 dark:text-ink-300 mt-1.5 leading-[1.55]">{post.brief}</p>
@@ -63,7 +61,7 @@ const allTags = [
                     <span aria-hidden="true">·</span>
                     <span class="flex flex-wrap gap-1">
                       {post.tags.map((t) => (
-                        <span class="font-mono">#{t.slug}</span>
+                        <span class="font-mono">#{t}</span>
                       ))}
                     </span>
                   </>
@@ -85,7 +83,7 @@ const allTags = [
         <div class="flex flex-wrap gap-2 not-prose">
           {allTags.map((t) => (
             <span class="font-mono text-xs px-2 py-1 rounded bg-ink-100 dark:bg-ink-800 text-ink-700 dark:text-ink-300">
-              #{t.slug}
+              #{t}
             </span>
           ))}
         </div>
