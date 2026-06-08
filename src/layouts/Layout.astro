@@ -31,7 +31,7 @@ const canonical = new URL(Astro.url.pathname, site.url).toString();
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content={site.avatarUrl} />
+    <meta property="og:image" content={new URL(site.avatarUrl, Astro.site).href} />
     <meta name="twitter:card" content="summary" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="alternate" type="application/rss+xml" title={site.name} href="/rss.xml" />
