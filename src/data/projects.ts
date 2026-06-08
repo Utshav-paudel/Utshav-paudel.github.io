@@ -3,7 +3,10 @@ export type Project = {
   tagline: string;
   stack: string[];
   highlights: string[];
+  /** Primary external link (e.g. a model/demo). Labeled by destination. */
   url?: string;
+  /** Source-code repository (e.g. GitHub). Shown as a separate "GitHub" link. */
+  repo?: string;
   /** Domain (e.g. "Healthcare", "NLP"). Shown as a colored chip. */
   domain?: string;
   domainAccent?: string;
@@ -25,6 +28,7 @@ export const projects: Project[] = [
       "FastAPI backend handling AI inference and health-record flow.",
     ],
     url: "https://huggingface.co/Utshav/medgemma-nepali-fp16",
+    repo: "https://github.com/Utshav-paudel/Merodaktar",
     domain: "Healthcare",
     domainAccent: "bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300",
     glyph: "✚",
