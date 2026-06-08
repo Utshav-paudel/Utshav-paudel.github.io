@@ -55,35 +55,57 @@ async function query<T>(q: string, variables?: Record<string, unknown>): Promise
 const cleanTitle = (t: string) => t.replace(/\s+/g, " ").trim();
 
 export async function listPosts(limit = 50): Promise<HashnodePost[]> {
-  const data = await query<{
-    publication: { posts: { edges: { node: HashnodePost }[] } } | null;
-  }>(
-    `query Posts($host: String!, $first: Int!) {
-      publication(host: $host) {
-        posts(first: $first) { edges { node { ${POST_FIELDS} } } }
-      }
-    }`,
-    { host: HOST, first: limit },
-  );
-  if (!data.publication) return [];
-  return data.publication.posts.edges
-    .map((e) => e.node)
-    .map((p) => ({ ...p, title: cleanTitle(p.title) }))
-    .sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
+  try {
+    const data = await query<{
+      publication: { posts: { edges: { node: HashnodePost }[] } } | null;
+    }>(
+      `query Posts($host: String!, $first: Int!) {
+        publication(host: $host) {
+          posts(first: $first) { edges { node { ${POST_FIELDS} } } }
+        }
+      }`,
+      { host: HOST, first: limit },
+    );
+    if (!data.publication) return [];
+    return data.publication.posts.edges
+      .map((e) => e.node)
+      .map((p) => ({ ...p, title: cleanTitle(p.title) }))
+      .sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
+  } catch (err) {
+    // Degrade gracefully instead of failing the whole `astro build`. Hashnode
+    // retired free GraphQL API access on 2026-05-13, so unauthenticated builds
+    // get an HTML error page; the blog simply renders with no posts until the
+    // API is restored (Pro token) or the data source is migrated.
+    console.warn(
+      `[hashnode] listPosts failed; rendering blog with no posts: ${
+        err instanceof Error ? err.message : String(err)
+      }`,
+    );
+    return [];
+  }
 }
 
 export async function getPost(slug: string): Promise<HashnodePost | null> {
-  const data = await query<{
-    publication: { post: HashnodePost | null } | null;
-  }>(
-    `query Post($host: String!, $slug: String!) {
-      publication(host: $host) {
-        post(slug: $slug) { ${POST_FIELDS} }
-      }
-    }`,
-    { host: HOST, slug },
-  );
-  const p = data.publication?.post ?? null;
-  if (!p) return null;
-  return { ...p, title: cleanTitle(p.title) };
+  try {
+    const data = await query<{
+      publication: { post: HashnodePost | null } | null;
+    }>(
+      `query Post($host: String!, $slug: String!) {
+        publication(host: $host) {
+          post(slug: $slug) { ${POST_FIELDS} }
+        }
+      }`,
+      { host: HOST, slug },
+    );
+    const p = data.publication?.post ?? null;
+    if (!p) return null;
+    return { ...p, title: cleanTitle(p.title) };
+  } catch (err) {
+    console.warn(
+      `[hashnode] getPost(${slug}) failed: ${
+        err instanceof Error ? err.message : String(err)
+      }`,
+    );
+    return null;
+  }
 }
