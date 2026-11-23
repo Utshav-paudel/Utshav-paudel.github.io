@@ -24,11 +24,10 @@ export const skillGroups: SkillGroup[] = [
     items: [
       { name: "PyTorch", devicon: "pytorch/pytorch-original" },
       { name: "TensorFlow", devicon: "tensorflow/tensorflow-original" },
-      { name: "Scikit-learn", devicon: "scikitlearn/scikitlearn-original" },
-      { name: "Pandas", devicon: "pandas/pandas-original" },
-      { name: "NumPy", devicon: "numpy/numpy-original" },
       { name: "LLMs" },
       { name: "RAG" },
+      { name: "LLM Evaluation" },
+      { name: "Fine-tuning" },
       { name: "LangChain" },
       { name: "NLP" },
       { name: "Computer Vision" },

@@ -33,8 +33,8 @@ export const experience: Experience[] = [
     current: true,
     bullets: [
       "AI engineer on a clinical-automation platform deployed in an NHS pilot. Designed the agent architecture and clinical RAG pipeline targeting clinician documentation and decision-support workflows.",
-      "Fine-tune domain-specific LLMs (Mistral 8×22B, Llama 3, Command R family) on curated hepatology cases for medical reasoning and structured documentation; build clinical evaluation harnesses covering factuality, citation grounding, and hallucination rate.",
-      "Cut inference cost and latency for real-time clinical use through various caching techniques (KV cache, prompt caching, semantic response cache), request batching, and quantization; built monitoring for latency, drift, and hallucination signals.",
+      "Fine-tune domain-specific LLMs (Mixtral 8x22B, Llama 3, Command R family) on curated hepatology cases for medical reasoning and structured documentation; build clinical evaluation harnesses covering factuality, citation grounding, and hallucination rate.",
+      "Cut inference cost and latency for real-time clinical use with prompt caching, a semantic response cache, request batching and quantization; built monitoring for latency, drift, and hallucination signals.",
     ],
   },
   {

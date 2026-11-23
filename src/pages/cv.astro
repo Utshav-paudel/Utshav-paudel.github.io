@@ -138,16 +138,6 @@ try {
         <a href={`https://linkedin.com/in/${site.linkedin}`} target="_blank" rel="noopener">linkedin.com/in/{site.linkedin}</a>
       </div>
 
-      <h2>Education</h2>
-      <div class="row">
-        <div>
-          <h3>{education.degree}</h3>
-          <div class="org">{education.school}</div>
-          <div class="where">{education.location}</div>
-        </div>
-        <time>{education.start} → {education.end}</time>
-      </div>
-
       <h2>Experience</h2>
       {
         experience.map((job) => (
@@ -188,22 +178,30 @@ try {
         ))
       }
 
-      <h2>Selected Writing</h2>
-      {writing.length > 0 ? (
-        <ul class="writing">
-          {writing.map((w) => (
-            <li>
-              <a href={w.url}>{w.title}</a>
-              <time>{w.publishedAt.slice(0, 10)}</time>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p class="placeholder">See <a href="/blog/" style="color:#2563eb;text-decoration:none">utshavpaudel.com.np/blog</a> for recent posts.</p>
+      {writing.length > 0 && (
+        <>
+          <h2>Selected Writing</h2>
+          <ul class="writing">
+            {writing.map((w) => (
+              <li>
+                <a href={w.url}>{w.title}</a>
+                <time>{w.publishedAt.slice(0, 10)}</time>
+              </li>
+            ))}
+          </ul>
+        </>
       )}
 
-      <h2>Open Source / Talks</h2>
-      <p class="placeholder">Forthcoming: signature open-source project on clinical LLM evaluation in development. Updates at <a href={`https://github.com/${site.github}`} style="color:#2563eb;text-decoration:none">github.com/{site.github}</a>.</p>
+      <h2>Education</h2>
+      <div class="row">
+        <div>
+          <h3>{education.degree}</h3>
+          <div class="org">{education.school}</div>
+          <div class="where">{education.location}</div>
+        </div>
+        <time>{education.start} → {education.end}</time>
+      </div>
+
     </article>
   </body>
 </html>
