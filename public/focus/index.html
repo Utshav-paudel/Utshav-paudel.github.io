@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.github.com; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'">
+<title>Focus Board</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%233b6cf6'/%3E%3Cpath d='M9 17l5 5 9-11' stroke='white' stroke-width='3.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/app.css">
+<script src="assets/app.js" defer></script>
+</head>
+<body>
+<main id="lock" class="lock">
+  <form id="lockForm" class="lock-card" autocomplete="off">
+    <div class="lock-logo" aria-hidden="true"></div>
+    <h1>Focus Board</h1>
+    <p class="muted">Private. Everything here is encrypted until you unlock it.</p>
+    <label for="pw" class="sr">Password</label>
+    <input id="pw" type="password" placeholder="Password" autocomplete="current-password" required autofocus>
+    <button id="unlockBtn" type="submit">Unlock</button>
+    <p id="lockMsg" class="lock-msg" role="status"></p>
+  </form>
+</main>
+
+<div id="app" class="app" hidden>
+  <header class="top">
+    <div class="brand"><span class="dot" aria-hidden="true"></span>Focus Board</div>
+    <nav id="tabs" class="tabs" role="tablist">
+      <button data-view="today" class="on">Today</button>
+      <button data-view="lessons">Lessons</button>
+      <button data-view="apps">Applications</button>
+      <button data-view="settings">Settings</button>
+    </nav>
+    <div class="top-right">
+      <span id="sync" class="sync" title="Sync status"></span>
+      <button id="lockBtn" class="ghost" title="Lock now">Lock</button>
+    </div>
+  </header>
+  <section id="stats" class="stats"></section>
+  <section id="view" class="view"></section>
+</div>
+<div id="toast" class="toast" role="status" hidden></div>
+</body>
+</html>
