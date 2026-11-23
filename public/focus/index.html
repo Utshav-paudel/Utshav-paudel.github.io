@@ -5,42 +5,61 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.github.com; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'">
-<title>Focus Board</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%233b6cf6'/%3E%3Cpath d='M9 17l5 5 9-11' stroke='white' stroke-width='3.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://api.github.com; worker-src 'self'; base-uri 'none'; form-action 'none'">
+<title>focus.ipynb</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231c1917'/%3E%3Ctext x='16' y='21' font-family='monospace' font-size='13' fill='%23fbf6ea' text-anchor='middle'%3E[*]%3C/text%3E%3C/svg%3E">
+<link rel="preload" href="assets/fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/geist-mono.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/app.css">
+<script src="assets/theme.js"></script>
 <script src="assets/app.js" defer></script>
 </head>
 <body>
-<main id="lock" class="lock">
-  <form id="lockForm" class="lock-card" autocomplete="off">
-    <div class="lock-logo" aria-hidden="true"></div>
-    <h1>Focus Board</h1>
-    <p class="muted">Private. Everything here is encrypted until you unlock it.</p>
-    <label for="pw" class="sr">Password</label>
-    <input id="pw" type="password" placeholder="Password" autocomplete="current-password" required autofocus>
-    <button id="unlockBtn" type="submit">Unlock</button>
-    <p id="lockMsg" class="lock-msg" role="status"></p>
-  </form>
+<header class="toolbar">
+  <div class="wrap">
+    <div class="bar1">
+      <div class="file"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span id="filename">focus.ipynb</span></div>
+      <nav id="tabs" class="tabs" aria-label="Sections" hidden>
+        <button data-view="today" class="on">today</button>
+        <button data-view="lessons">lessons</button>
+        <button data-view="apps">applications</button>
+        <button data-view="settings">settings</button>
+      </nav>
+      <div class="tools">
+        <button id="themeBtn" class="icon" type="button" aria-label="Toggle theme">
+          <svg class="moon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg class="sun" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <button id="lockBtn" class="icon" type="button" aria-label="Lock" hidden>
+          <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="bar2">
+      <span>File</span><span>Edit</span><span>View</span><span>Run</span><span>Kernel</span>
+      <span class="kernel"><i id="kdot"></i><span id="sync">kernel: utshav · locked</span></span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap page">
+  <article id="lock" class="nb">
+    <div class="cell md first"><div class="cc"></div><div class="cb">
+      <h1 class="title">Focus Board</h1>
+      <p class="lede">Private notebook. Lessons, applications and the trek plan, encrypted until you run the cell below.</p>
+    </div></div>
+    <form id="lockForm" class="cell code" autocomplete="off"><div class="cc in">In [ ]:</div><div class="cb">
+      <label for="pw" class="code-line"><span class="kw">unlock</span>(<span class="str">password</span>=</label>
+      <div class="pw-row"><input id="pw" type="password" placeholder="••••••••••••" autocomplete="current-password" required autofocus><span class="code-line">)</span></div>
+      <button id="unlockBtn" type="submit" class="run">▶ Run</button>
+    </div></form>
+    <div class="cell out" id="lockOut" hidden><div class="cc outc">Out[1]:</div><div class="cb"><pre id="lockMsg" class="err"></pre></div></div>
+  </article>
+
+  <article id="app" class="nb" hidden></article>
 </main>
 
-<div id="app" class="app" hidden>
-  <header class="top">
-    <div class="brand"><span class="dot" aria-hidden="true"></span>Focus Board</div>
-    <nav id="tabs" class="tabs" role="tablist">
-      <button data-view="today" class="on">Today</button>
-      <button data-view="lessons">Lessons</button>
-      <button data-view="apps">Applications</button>
-      <button data-view="settings">Settings</button>
-    </nav>
-    <div class="top-right">
-      <span id="sync" class="sync" title="Sync status"></span>
-      <button id="lockBtn" class="ghost" title="Lock now">Lock</button>
-    </div>
-  </header>
-  <section id="stats" class="stats"></section>
-  <section id="view" class="view"></section>
-</div>
+<footer class="wrap foot"><span>utshav · focus board</span><span>AES-256-GCM · nothing leaves this page unencrypted</span></footer>
 <div id="toast" class="toast" role="status" hidden></div>
 </body>
 </html>
